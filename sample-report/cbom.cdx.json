@@ -1,0 +1,1850 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.6",
+  "serialNumber": "urn:uuid:b88b5905-3fb9-4269-af67-b4ef540ec470",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2026-10-28T03:40:55Z",
+    "tools": {
+      "components": [
+        {
+          "type": "application",
+          "name": "Quantum-Ready Windows PKI",
+          "version": "1.0.0"
+        }
+      ]
+    },
+    "component": {
+      "type": "platform",
+      "name": "Contoso (fictional demo estate)"
+    }
+  },
+  "components": [
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/ca/contoso-root-ca",
+      "name": "Contoso Root CA",
+      "description": "Root CA (offline)",
+      "cryptoProperties": {
+        "assetType": "certificate",
+        "certificateProperties": {
+          "subjectName": "CN=Contoso Root CA",
+          "notValidBefore": "2016-03-01",
+          "notValidAfter": "2036-03-01",
+          "signatureAlgorithmRef": "crypto/algorithm/rsa-4096",
+          "subjectPublicKeyRef": "crypto/algorithm/rsa-4096",
+          "certificateFormat": "X.509"
+        }
+      },
+      "properties": [
+        {
+          "name": "qr:category",
+          "value": "CA"
+        },
+        {
+          "name": "qr:quantumVulnerable",
+          "value": "true"
+        },
+        {
+          "name": "qr:urgency",
+          "value": "Now"
+        },
+        {
+          "name": "qr:startBy",
+          "value": "2027-01-01"
+        },
+        {
+          "name": "qr:shelfLifeYears",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/ca/contoso-issuing-ca-01",
+      "name": "Contoso Issuing CA 01",
+      "description": "Issuing CA",
+      "cryptoProperties": {
+        "assetType": "certificate",
+        "certificateProperties": {
+          "subjectName": "CN=Contoso Issuing CA 01",
+          "notValidBefore": "2021-05-10",
+          "notValidAfter": "2031-05-10",
+          "signatureAlgorithmRef": "crypto/algorithm/rsa-2048",
+          "subjectPublicKeyRef": "crypto/algorithm/rsa-2048",
+          "certificateFormat": "X.509"
+        }
+      },
+      "properties": [
+        {
+          "name": "qr:category",
+          "value": "CA"
+        },
+        {
+          "name": "qr:quantumVulnerable",
+          "value": "true"
+        },
+        {
+          "name": "qr:urgency",
+          "value": "Now"
+        },
+        {
+          "name": "qr:startBy",
+          "value": "2027-01-01"
+        },
+        {
+          "name": "qr:shelfLifeYears",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/ca/contoso-legacy-ca",
+      "name": "Contoso Legacy CA",
+      "description": "Issuing CA",
+      "cryptoProperties": {
+        "assetType": "certificate",
+        "certificateProperties": {
+          "subjectName": "CN=Contoso Legacy CA",
+          "notValidBefore": "2014-02-01",
+          "notValidAfter": "2029-02-01",
+          "signatureAlgorithmRef": "crypto/algorithm/rsa-2048",
+          "subjectPublicKeyRef": "crypto/algorithm/rsa-2048",
+          "certificateFormat": "X.509"
+        }
+      },
+      "properties": [
+        {
+          "name": "qr:category",
+          "value": "CA"
+        },
+        {
+          "name": "qr:quantumVulnerable",
+          "value": "true"
+        },
+        {
+          "name": "qr:urgency",
+          "value": "Now"
+        },
+        {
+          "name": "qr:startBy",
+          "value": "2027-01-01"
+        },
+        {
+          "name": "qr:shelfLifeYears",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/ca/contoso-pqc-pilot-ca",
+      "name": "Contoso PQC Pilot CA",
+      "description": "Root CA",
+      "cryptoProperties": {
+        "assetType": "certificate",
+        "certificateProperties": {
+          "subjectName": "CN=Contoso PQC Pilot CA",
+          "notValidBefore": "2026-06-15",
+          "notValidAfter": "2041-06-15",
+          "signatureAlgorithmRef": "crypto/algorithm/ml-dsa-65",
+          "subjectPublicKeyRef": "crypto/algorithm/ml-dsa-65",
+          "certificateFormat": "X.509"
+        }
+      },
+      "properties": [
+        {
+          "name": "qr:category",
+          "value": "CA"
+        },
+        {
+          "name": "qr:quantumVulnerable",
+          "value": "false"
+        },
+        {
+          "name": "qr:urgency",
+          "value": "None"
+        },
+        {
+          "name": "qr:startBy",
+          "value": ""
+        },
+        {
+          "name": "qr:shelfLifeYears",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/template/contoso-webserver",
+      "name": "Contoso-WebServer",
+      "description": "Server Authentication",
+      "cryptoProperties": {
+        "assetType": "related-crypto-material",
+        "relatedCryptoMaterialProperties": {
+          "type": "private-key",
+          "algorithmRef": "crypto/algorithm/rsa-2048",
+          "size": 2048
+        }
+      },
+      "properties": [
+        {
+          "name": "qr:category",
+          "value": "Template"
+        },
+        {
+          "name": "qr:quantumVulnerable",
+          "value": "true"
+        },
+        {
+          "name": "qr:urgency",
+          "value": "Overdue"
+        },
+        {
+          "name": "qr:startBy",
+          "value": "2026-07-03"
+        },
+        {
+          "name": "qr:shelfLifeYears",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/template/contoso-webserver-v4",
+      "name": "Contoso-WebServer-v4",
+      "description": "Server Authentication",
+      "cryptoProperties": {
+        "assetType": "related-crypto-material",
+        "relatedCryptoMaterialProperties": {
+          "type": "private-key",
+          "algorithmRef": "crypto/algorithm/rsa-3072",
+          "size": 3072
+        }
+      },
+      "properties": [
+        {
+          "name": "qr:category",
+          "value": "Template"
+        },
+        {
+          "name": "qr:quantumVulnerable",
+          "value": "true"
+        },
+        {
+          "name": "qr:urgency",
+          "value": "Next"
+        },
+        {
+          "name": "qr:startBy",
+          "value": "2027-11-30"
+        },
+        {
+          "name": "qr:shelfLifeYears",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/template/contoso-kdc",
+      "name": "Contoso-KDC",
+      "description": "Client Authentication, Server Authentication, Smart Card Logon, KDC Authentication",
+      "cryptoProperties": {
+        "assetType": "related-crypto-material",
+        "relatedCryptoMaterialProperties": {
+          "type": "private-key",
+          "algorithmRef": "crypto/algorithm/rsa-2048",
+          "size": 2048
+        }
+      },
+      "properties": [
+        {
+          "name": "qr:category",
+          "value": "Template"
+        },
+        {
+          "name": "qr:quantumVulnerable",
+          "value": "true"
+        },
+        {
+          "name": "qr:urgency",
+          "value": "Now"
+        },
+        {
+          "name": "qr:startBy",
+          "value": "2027-07-03"
+        },
+        {
+          "name": "qr:shelfLifeYears",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/template/contoso-computer",
+      "name": "Contoso-Computer",
+      "description": "Client Authentication, Server Authentication",
+      "cryptoProperties": {
+        "assetType": "related-crypto-material",
+        "relatedCryptoMaterialProperties": {
+          "type": "private-key",
+          "algorithmRef": "crypto/algorithm/rsa-2048",
+          "size": 2048
+        }
+      },
+      "properties": [
+        {
+          "name": "qr:category",
+          "value": "Template"
+        },
+        {
+          "name": "qr:quantumVulnerable",
+          "value": "true"
+        },
+        {
+          "name": "qr:urgency",
+          "value": "Now"
+        },
+        {
+          "name": "qr:startBy",
+          "value": "2027-07-03"
+        },
+        {
+          "name": "qr:shelfLifeYears",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/template/contoso-user",
+      "name": "Contoso-User",
+      "description": "Client Authentication, Secure Email, Encrypting File System",
+      "cryptoProperties": {
+        "assetType": "related-crypto-material",
+        "relatedCryptoMaterialProperties": {
+          "type": "private-key",
+          "algorithmRef": "crypto/algorithm/rsa-2048",
+          "size": 2048
+        }
+      },
+      "properties": [
+        {
+          "name": "qr:category",
+          "value": "Template"
+        },
+        {
+          "name": "qr:quantumVulnerable",
+          "value": "true"
+        },
+        {
+          "name": "qr:urgency",
+          "value": "Overdue"
+        },
+        {
+          "name": "qr:startBy",
+          "value": "2013-07-02"
+        },
+        {
+          "name": "qr:shelfLifeYears",
+          "value": "15"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/template/contoso-efs-recovery",
+      "name": "Contoso-EFS-Recovery",
+      "description": "File Recovery",
+      "cryptoProperties": {
+        "assetType": "related-crypto-material",
+        "relatedCryptoMaterialProperties": {
+          "type": "private-key",
+          "algorithmRef": "crypto/algorithm/rsa-2048",
+          "size": 2048
+        }
+      },
+      "properties": [
+        {
+          "name": "qr:category",
+          "value": "Template"
+        },
+        {
+          "name": "qr:quantumVulnerable",
+          "value": "true"
+        },
+        {
+          "name": "qr:urgency",
+          "value": "Overdue"
+        },
+        {
+          "name": "qr:startBy",
+          "value": "2013-07-02"
+        },
+        {
+          "name": "qr:shelfLifeYears",
+          "value": "15"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/template/contoso-smime",
+      "name": "Contoso-SMIME",
+      "description": "Secure Email",
+      "cryptoProperties": {
+        "assetType": "related-crypto-material",
+        "relatedCryptoMaterialProperties": {
+          "type": "private-key",
+          "algorithmRef": "crypto/algorithm/rsa-2048",
+          "size": 2048
+        }
+      },
+      "properties": [
+        {
+          "name": "qr:category",
+          "value": "Template"
+        },
+        {
+          "name": "qr:quantumVulnerable",
+          "value": "true"
+        },
+        {
+          "name": "qr:urgency",
+          "value": "Overdue"
+        },
+        {
+          "name": "qr:startBy",
+          "value": "2004-01-02"
+        },
+        {
+          "name": "qr:shelfLifeYears",
+          "value": "25"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/template/contoso-codesigning",
+      "name": "Contoso-CodeSigning",
+      "description": "Code Signing",
+      "cryptoProperties": {
+        "assetType": "related-crypto-material",
+        "relatedCryptoMaterialProperties": {
+          "type": "private-key",
+          "algorithmRef": "crypto/algorithm/rsa-3072",
+          "size": 3072
+        }
+      },
+      "properties": [
+        {
+          "name": "qr:category",
+          "value": "Template"
+        },
+        {
+          "name": "qr:quantumVulnerable",
+          "value": "true"
+        },
+        {
+          "name": "qr:urgency",
+          "value": "Overdue"
+        },
+        {
+          "name": "qr:startBy",
+          "value": "2025-07-02"
+        },
+        {
+          "name": "qr:shelfLifeYears",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/template/contoso-smartcard",
+      "name": "Contoso-SmartCard",
+      "description": "Smart Card Logon, Client Authentication",
+      "cryptoProperties": {
+        "assetType": "related-crypto-material",
+        "relatedCryptoMaterialProperties": {
+          "type": "private-key",
+          "algorithmRef": "crypto/algorithm/rsa-2048",
+          "size": 2048
+        }
+      },
+      "properties": [
+        {
+          "name": "qr:category",
+          "value": "Template"
+        },
+        {
+          "name": "qr:quantumVulnerable",
+          "value": "true"
+        },
+        {
+          "name": "qr:urgency",
+          "value": "Overdue"
+        },
+        {
+          "name": "qr:startBy",
+          "value": "2025-07-02"
+        },
+        {
+          "name": "qr:shelfLifeYears",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/template/contoso-rdp",
+      "name": "Contoso-RDP",
+      "description": "Remote Desktop Authentication",
+      "cryptoProperties": {
+        "assetType": "related-crypto-material",
+        "relatedCryptoMaterialProperties": {
+          "type": "private-key",
+          "algorithmRef": "crypto/algorithm/rsa-2048",
+          "size": 2048
+        }
+      },
+      "properties": [
+        {
+          "name": "qr:category",
+          "value": "Template"
+        },
+        {
+          "name": "qr:quantumVulnerable",
+          "value": "true"
+        },
+        {
+          "name": "qr:urgency",
+          "value": "Next"
+        },
+        {
+          "name": "qr:startBy",
+          "value": "2028-01-02"
+        },
+        {
+          "name": "qr:shelfLifeYears",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/template/contoso-ocsp",
+      "name": "Contoso-OCSP",
+      "description": "OCSP Signing",
+      "cryptoProperties": {
+        "assetType": "related-crypto-material",
+        "relatedCryptoMaterialProperties": {
+          "type": "private-key",
+          "algorithmRef": "crypto/algorithm/rsa-2048",
+          "size": 2048
+        }
+      },
+      "properties": [
+        {
+          "name": "qr:category",
+          "value": "Template"
+        },
+        {
+          "name": "qr:quantumVulnerable",
+          "value": "true"
+        },
+        {
+          "name": "qr:urgency",
+          "value": "Next"
+        },
+        {
+          "name": "qr:startBy",
+          "value": "2028-12-17"
+        },
+        {
+          "name": "qr:shelfLifeYears",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/template/webserver",
+      "name": "WebServer",
+      "description": "Server Authentication",
+      "cryptoProperties": {
+        "assetType": "related-crypto-material",
+        "relatedCryptoMaterialProperties": {
+          "type": "private-key",
+          "algorithmRef": "crypto/algorithm/rsa-1024",
+          "size": 1024
+        }
+      },
+      "properties": [
+        {
+          "name": "qr:category",
+          "value": "Template"
+        },
+        {
+          "name": "qr:quantumVulnerable",
+          "value": "true"
+        },
+        {
+          "name": "qr:urgency",
+          "value": "Overdue"
+        },
+        {
+          "name": "qr:startBy",
+          "value": "2026-07-03"
+        },
+        {
+          "name": "qr:shelfLifeYears",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/template/contoso-wsus-legacy",
+      "name": "Contoso-WSUS-Legacy",
+      "description": "Server Authentication",
+      "cryptoProperties": {
+        "assetType": "related-crypto-material",
+        "relatedCryptoMaterialProperties": {
+          "type": "private-key",
+          "algorithmRef": "crypto/algorithm/rsa-2048",
+          "size": 2048
+        }
+      },
+      "properties": [
+        {
+          "name": "qr:category",
+          "value": "Template"
+        },
+        {
+          "name": "qr:quantumVulnerable",
+          "value": "true"
+        },
+        {
+          "name": "qr:urgency",
+          "value": "Overdue"
+        },
+        {
+          "name": "qr:startBy",
+          "value": "2025-07-02"
+        },
+        {
+          "name": "qr:shelfLifeYears",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/template/pqc-webserver-mldsa",
+      "name": "PQC-WebServer-MLDSA",
+      "description": "Server Authentication",
+      "cryptoProperties": {
+        "assetType": "related-crypto-material",
+        "relatedCryptoMaterialProperties": {
+          "type": "private-key",
+          "algorithmRef": "crypto/algorithm/ml-dsa-65",
+          "size": 65
+        }
+      },
+      "properties": [
+        {
+          "name": "qr:category",
+          "value": "Template"
+        },
+        {
+          "name": "qr:quantumVulnerable",
+          "value": "false"
+        },
+        {
+          "name": "qr:urgency",
+          "value": "None"
+        },
+        {
+          "name": "qr:startBy",
+          "value": ""
+        },
+        {
+          "name": "qr:shelfLifeYears",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/endpoint/ldaps-corp-dc01-636",
+      "name": "LDAPS CORP-DC01:636",
+      "description": "LDAPS",
+      "cryptoProperties": {
+        "assetType": "protocol",
+        "protocolProperties": {
+          "type": "tls",
+          "version": "1.3",
+          "cipherSuites": [
+            {
+              "name": "TLS_AES_256_GCM_SHA384"
+            }
+          ],
+          "cryptoRefArray": [
+            "crypto/algorithm/rsa-2048"
+          ]
+        }
+      },
+      "properties": [
+        {
+          "name": "qr:category",
+          "value": "Endpoint"
+        },
+        {
+          "name": "qr:quantumVulnerable",
+          "value": "true"
+        },
+        {
+          "name": "qr:urgency",
+          "value": "Overdue"
+        },
+        {
+          "name": "qr:startBy",
+          "value": "2021-07-02"
+        },
+        {
+          "name": "qr:shelfLifeYears",
+          "value": "7"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/endpoint/ldaps-corp-dc02-636",
+      "name": "LDAPS CORP-DC02:636",
+      "description": "LDAPS",
+      "cryptoProperties": {
+        "assetType": "protocol",
+        "protocolProperties": {
+          "type": "tls",
+          "version": "1.3",
+          "cipherSuites": [
+            {
+              "name": "TLS_AES_256_GCM_SHA384"
+            }
+          ],
+          "cryptoRefArray": [
+            "crypto/algorithm/rsa-2048"
+          ]
+        }
+      },
+      "properties": [
+        {
+          "name": "qr:category",
+          "value": "Endpoint"
+        },
+        {
+          "name": "qr:quantumVulnerable",
+          "value": "true"
+        },
+        {
+          "name": "qr:urgency",
+          "value": "Overdue"
+        },
+        {
+          "name": "qr:startBy",
+          "value": "2021-07-02"
+        },
+        {
+          "name": "qr:shelfLifeYears",
+          "value": "7"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/endpoint/ldaps-corp-dc03-636",
+      "name": "LDAPS CORP-DC03:636",
+      "description": "LDAPS",
+      "cryptoProperties": {
+        "assetType": "protocol",
+        "protocolProperties": {
+          "type": "tls",
+          "version": "1.2",
+          "cipherSuites": [
+            {
+              "name": "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384"
+            }
+          ],
+          "cryptoRefArray": [
+            "crypto/algorithm/rsa-2048"
+          ]
+        }
+      },
+      "properties": [
+        {
+          "name": "qr:category",
+          "value": "Endpoint"
+        },
+        {
+          "name": "qr:quantumVulnerable",
+          "value": "true"
+        },
+        {
+          "name": "qr:urgency",
+          "value": "Overdue"
+        },
+        {
+          "name": "qr:startBy",
+          "value": "2021-07-02"
+        },
+        {
+          "name": "qr:shelfLifeYears",
+          "value": "7"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/endpoint/ldaps-br-dc01-636",
+      "name": "LDAPS BR-DC01:636",
+      "description": "Branch-Denver",
+      "cryptoProperties": {
+        "assetType": "protocol",
+        "protocolProperties": {
+          "type": "tls",
+          "version": "1.2",
+          "cipherSuites": [
+            {
+              "name": "TLS_RSA_WITH_AES_256_CBC_SHA256"
+            }
+          ],
+          "cryptoRefArray": [
+            "crypto/algorithm/rsa-2048"
+          ]
+        }
+      },
+      "properties": [
+        {
+          "name": "qr:category",
+          "value": "Endpoint"
+        },
+        {
+          "name": "qr:quantumVulnerable",
+          "value": "true"
+        },
+        {
+          "name": "qr:urgency",
+          "value": "Overdue"
+        },
+        {
+          "name": "qr:startBy",
+          "value": "2021-07-02"
+        },
+        {
+          "name": "qr:shelfLifeYears",
+          "value": "7"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/endpoint/rdp-corp-dc01-3389",
+      "name": "RDP CORP-DC01:3389",
+      "description": "RDP",
+      "cryptoProperties": {
+        "assetType": "protocol",
+        "protocolProperties": {
+          "type": "tls",
+          "version": "1.3",
+          "cipherSuites": [
+            {
+              "name": "TLS_AES_256_GCM_SHA384"
+            }
+          ],
+          "cryptoRefArray": [
+            "crypto/algorithm/rsa-2048"
+          ]
+        }
+      },
+      "properties": [
+        {
+          "name": "qr:category",
+          "value": "Endpoint"
+        },
+        {
+          "name": "qr:quantumVulnerable",
+          "value": "true"
+        },
+        {
+          "name": "qr:urgency",
+          "value": "Overdue"
+        },
+        {
+          "name": "qr:startBy",
+          "value": "2013-07-02"
+        },
+        {
+          "name": "qr:shelfLifeYears",
+          "value": "15"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/endpoint/rdp-corp-dc03-3389",
+      "name": "RDP CORP-DC03:3389",
+      "description": "RDP",
+      "cryptoProperties": {
+        "assetType": "protocol",
+        "protocolProperties": {
+          "type": "tls",
+          "version": "1.2",
+          "cipherSuites": [
+            {
+              "name": "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384"
+            }
+          ],
+          "cryptoRefArray": [
+            "crypto/algorithm/rsa-2048"
+          ]
+        }
+      },
+      "properties": [
+        {
+          "name": "qr:category",
+          "value": "Endpoint"
+        },
+        {
+          "name": "qr:quantumVulnerable",
+          "value": "true"
+        },
+        {
+          "name": "qr:urgency",
+          "value": "Overdue"
+        },
+        {
+          "name": "qr:startBy",
+          "value": "2013-07-02"
+        },
+        {
+          "name": "qr:shelfLifeYears",
+          "value": "15"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/endpoint/rdp-br-dc01-3389",
+      "name": "RDP BR-DC01:3389",
+      "description": "Branch-Denver",
+      "cryptoProperties": {
+        "assetType": "protocol",
+        "protocolProperties": {
+          "type": "tls",
+          "version": "1.2",
+          "cipherSuites": [
+            {
+              "name": "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384"
+            }
+          ],
+          "cryptoRefArray": [
+            "crypto/algorithm/rsa-2048"
+          ]
+        }
+      },
+      "properties": [
+        {
+          "name": "qr:category",
+          "value": "Endpoint"
+        },
+        {
+          "name": "qr:quantumVulnerable",
+          "value": "true"
+        },
+        {
+          "name": "qr:urgency",
+          "value": "Overdue"
+        },
+        {
+          "name": "qr:startBy",
+          "value": "2013-07-02"
+        },
+        {
+          "name": "qr:shelfLifeYears",
+          "value": "15"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/endpoint/rdp-corp-paw-jmp01-3389",
+      "name": "RDP CORP-PAW-JMP01:3389",
+      "description": "RDP",
+      "cryptoProperties": {
+        "assetType": "protocol",
+        "protocolProperties": {
+          "type": "tls",
+          "version": "1.3",
+          "cipherSuites": [
+            {
+              "name": "TLS_AES_256_GCM_SHA384"
+            }
+          ],
+          "cryptoRefArray": [
+            "crypto/algorithm/rsa-2048"
+          ]
+        }
+      },
+      "properties": [
+        {
+          "name": "qr:category",
+          "value": "Endpoint"
+        },
+        {
+          "name": "qr:quantumVulnerable",
+          "value": "true"
+        },
+        {
+          "name": "qr:urgency",
+          "value": "Overdue"
+        },
+        {
+          "name": "qr:startBy",
+          "value": "2014-10-02"
+        },
+        {
+          "name": "qr:shelfLifeYears",
+          "value": "15"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/endpoint/iis-hr-contoso-com-443",
+      "name": "IIS hr.contoso.com:443",
+      "description": "HR and payroll portal",
+      "cryptoProperties": {
+        "assetType": "protocol",
+        "protocolProperties": {
+          "type": "tls",
+          "version": "1.2",
+          "cipherSuites": [
+            {
+              "name": "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384"
+            }
+          ],
+          "cryptoRefArray": [
+            "crypto/algorithm/rsa-2048"
+          ]
+        }
+      },
+      "properties": [
+        {
+          "name": "qr:category",
+          "value": "Endpoint"
+        },
+        {
+          "name": "qr:quantumVulnerable",
+          "value": "true"
+        },
+        {
+          "name": "qr:urgency",
+          "value": "Overdue"
+        },
+        {
+          "name": "qr:startBy",
+          "value": "2003-07-03"
+        },
+        {
+          "name": "qr:shelfLifeYears",
+          "value": "25"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/endpoint/iis-legal-dms-contoso-com-443",
+      "name": "IIS legal-dms.contoso.com:443",
+      "description": "Legal document management",
+      "cryptoProperties": {
+        "assetType": "protocol",
+        "protocolProperties": {
+          "type": "tls",
+          "version": "1.2",
+          "cipherSuites": [
+            {
+              "name": "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384"
+            }
+          ],
+          "cryptoRefArray": [
+            "crypto/algorithm/rsa-2048"
+          ]
+        }
+      },
+      "properties": [
+        {
+          "name": "qr:category",
+          "value": "Endpoint"
+        },
+        {
+          "name": "qr:quantumVulnerable",
+          "value": "true"
+        },
+        {
+          "name": "qr:urgency",
+          "value": "Overdue"
+        },
+        {
+          "name": "qr:startBy",
+          "value": "2013-07-02"
+        },
+        {
+          "name": "qr:shelfLifeYears",
+          "value": "15"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/endpoint/iis-claims-contoso-com-443",
+      "name": "IIS claims.contoso.com:443",
+      "description": "Insurance claims",
+      "cryptoProperties": {
+        "assetType": "protocol",
+        "protocolProperties": {
+          "type": "tls",
+          "version": "1.3",
+          "cipherSuites": [
+            {
+              "name": "TLS_AES_256_GCM_SHA384"
+            }
+          ],
+          "cryptoRefArray": [
+            "crypto/algorithm/rsa-3072",
+            "crypto/algorithm/x25519mlkem768"
+          ]
+        }
+      },
+      "properties": [
+        {
+          "name": "qr:category",
+          "value": "Endpoint"
+        },
+        {
+          "name": "qr:quantumVulnerable",
+          "value": "true"
+        },
+        {
+          "name": "qr:urgency",
+          "value": "Next"
+        },
+        {
+          "name": "qr:startBy",
+          "value": "2028-01-02"
+        },
+        {
+          "name": "qr:shelfLifeYears",
+          "value": "25"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/endpoint/iis-intranet-contoso-com-443",
+      "name": "IIS intranet.contoso.com:443",
+      "description": "Intranet",
+      "cryptoProperties": {
+        "assetType": "protocol",
+        "protocolProperties": {
+          "type": "tls",
+          "version": "1.3",
+          "cipherSuites": [
+            {
+              "name": "TLS_AES_256_GCM_SHA384"
+            }
+          ],
+          "cryptoRefArray": [
+            "crypto/algorithm/ecdsa-p-256"
+          ]
+        }
+      },
+      "properties": [
+        {
+          "name": "qr:category",
+          "value": "Endpoint"
+        },
+        {
+          "name": "qr:quantumVulnerable",
+          "value": "true"
+        },
+        {
+          "name": "qr:urgency",
+          "value": "Overdue"
+        },
+        {
+          "name": "qr:startBy",
+          "value": "2026-07-03"
+        },
+        {
+          "name": "qr:shelfLifeYears",
+          "value": "2"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/endpoint/iis-pki-contoso-com-443",
+      "name": "IIS pki.contoso.com:443",
+      "description": "CRL and AIA distribution",
+      "cryptoProperties": {
+        "assetType": "protocol",
+        "protocolProperties": {
+          "type": "tls",
+          "version": "1.2",
+          "cipherSuites": [
+            {
+              "name": "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384"
+            }
+          ],
+          "cryptoRefArray": [
+            "crypto/algorithm/rsa-2048"
+          ]
+        }
+      },
+      "properties": [
+        {
+          "name": "qr:category",
+          "value": "Endpoint"
+        },
+        {
+          "name": "qr:quantumVulnerable",
+          "value": "true"
+        },
+        {
+          "name": "qr:urgency",
+          "value": "Next"
+        },
+        {
+          "name": "qr:startBy",
+          "value": "2028-01-02"
+        },
+        {
+          "name": "qr:shelfLifeYears",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/endpoint/iis-pqc-lab-contoso-com-443",
+      "name": "IIS pqc-lab.contoso.com:443",
+      "description": "PQC pilot",
+      "cryptoProperties": {
+        "assetType": "protocol",
+        "protocolProperties": {
+          "type": "tls",
+          "version": "1.3",
+          "cipherSuites": [
+            {
+              "name": "TLS_AES_256_GCM_SHA384"
+            }
+          ],
+          "cryptoRefArray": [
+            "crypto/algorithm/ml-dsa-65",
+            "crypto/algorithm/x25519mlkem768"
+          ]
+        }
+      },
+      "properties": [
+        {
+          "name": "qr:category",
+          "value": "Endpoint"
+        },
+        {
+          "name": "qr:quantumVulnerable",
+          "value": "false"
+        },
+        {
+          "name": "qr:urgency",
+          "value": "None"
+        },
+        {
+          "name": "qr:startBy",
+          "value": ""
+        },
+        {
+          "name": "qr:shelfLifeYears",
+          "value": "2"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/endpoint/wsus-corp-wsus01-8531",
+      "name": "WSUS CORP-WSUS01:8531",
+      "description": "WSUS",
+      "cryptoProperties": {
+        "assetType": "protocol",
+        "protocolProperties": {
+          "type": "tls",
+          "version": "1.2",
+          "cipherSuites": [
+            {
+              "name": "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384"
+            }
+          ],
+          "cryptoRefArray": [
+            "crypto/algorithm/rsa-2048"
+          ]
+        }
+      },
+      "properties": [
+        {
+          "name": "qr:category",
+          "value": "Endpoint"
+        },
+        {
+          "name": "qr:quantumVulnerable",
+          "value": "true"
+        },
+        {
+          "name": "qr:urgency",
+          "value": "Overdue"
+        },
+        {
+          "name": "qr:startBy",
+          "value": "2026-07-03"
+        },
+        {
+          "name": "qr:shelfLifeYears",
+          "value": "2"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/endpoint/wsus-br-wsus02-8530",
+      "name": "WSUS BR-WSUS02:8530",
+      "description": "Branch-Denver",
+      "cryptoProperties": {
+        "assetType": "protocol",
+        "protocolProperties": {
+          "type": "other",
+          "version": "HTTP"
+        }
+      },
+      "properties": [
+        {
+          "name": "qr:category",
+          "value": "Endpoint"
+        },
+        {
+          "name": "qr:quantumVulnerable",
+          "value": "false"
+        },
+        {
+          "name": "qr:urgency",
+          "value": "None"
+        },
+        {
+          "name": "qr:startBy",
+          "value": ""
+        },
+        {
+          "name": "qr:shelfLifeYears",
+          "value": "2"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/endpoint/wsus-corp-wsus-old-contoso-com-8531",
+      "name": "WSUS corp-wsus-old.contoso.com:8531",
+      "description": "WSUS",
+      "cryptoProperties": {
+        "assetType": "protocol",
+        "protocolProperties": {
+          "type": "tls",
+          "version": "1.2",
+          "cipherSuites": [
+            {
+              "name": "TLS_RSA_WITH_AES_128_CBC_SHA"
+            }
+          ],
+          "cryptoRefArray": [
+            "crypto/algorithm/rsa-1024"
+          ]
+        }
+      },
+      "properties": [
+        {
+          "name": "qr:category",
+          "value": "Endpoint"
+        },
+        {
+          "name": "qr:quantumVulnerable",
+          "value": "true"
+        },
+        {
+          "name": "qr:urgency",
+          "value": "Overdue"
+        },
+        {
+          "name": "qr:startBy",
+          "value": "2026-07-03"
+        },
+        {
+          "name": "qr:shelfLifeYears",
+          "value": "2"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/kerberos/svc-sql-legacy",
+      "name": "svc-sql-legacy",
+      "description": "SQL Server 2008 R2 reporting",
+      "cryptoProperties": {
+        "assetType": "protocol",
+        "protocolProperties": {
+          "type": "other",
+          "version": "Kerberos 5"
+        }
+      },
+      "properties": [
+        {
+          "name": "qr:category",
+          "value": "Kerberos"
+        },
+        {
+          "name": "qr:quantumVulnerable",
+          "value": "false"
+        },
+        {
+          "name": "qr:urgency",
+          "value": "None"
+        },
+        {
+          "name": "qr:startBy",
+          "value": ""
+        },
+        {
+          "name": "qr:shelfLifeYears",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/kerberos/svc-backup",
+      "name": "svc-backup",
+      "description": "Backup agent",
+      "cryptoProperties": {
+        "assetType": "protocol",
+        "protocolProperties": {
+          "type": "other",
+          "version": "Kerberos 5"
+        }
+      },
+      "properties": [
+        {
+          "name": "qr:category",
+          "value": "Kerberos"
+        },
+        {
+          "name": "qr:quantumVulnerable",
+          "value": "false"
+        },
+        {
+          "name": "qr:urgency",
+          "value": "None"
+        },
+        {
+          "name": "qr:startBy",
+          "value": ""
+        },
+        {
+          "name": "qr:shelfLifeYears",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/kerberos/svc-oracle-kt",
+      "name": "svc-oracle-kt",
+      "description": "Linux keytab for Oracle SSO",
+      "cryptoProperties": {
+        "assetType": "protocol",
+        "protocolProperties": {
+          "type": "other",
+          "version": "Kerberos 5"
+        }
+      },
+      "properties": [
+        {
+          "name": "qr:category",
+          "value": "Kerberos"
+        },
+        {
+          "name": "qr:quantumVulnerable",
+          "value": "false"
+        },
+        {
+          "name": "qr:urgency",
+          "value": "None"
+        },
+        {
+          "name": "qr:startBy",
+          "value": ""
+        },
+        {
+          "name": "qr:shelfLifeYears",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/kerberos/svc-sapbw",
+      "name": "svc-sapbw",
+      "description": "SAP BW (RC4 kept as a workaround)",
+      "cryptoProperties": {
+        "assetType": "protocol",
+        "protocolProperties": {
+          "type": "other",
+          "version": "Kerberos 5"
+        }
+      },
+      "properties": [
+        {
+          "name": "qr:category",
+          "value": "Kerberos"
+        },
+        {
+          "name": "qr:quantumVulnerable",
+          "value": "false"
+        },
+        {
+          "name": "qr:urgency",
+          "value": "None"
+        },
+        {
+          "name": "qr:startBy",
+          "value": ""
+        },
+        {
+          "name": "qr:shelfLifeYears",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/kerberos/svc-crm",
+      "name": "svc-crm",
+      "description": "user with SPN",
+      "cryptoProperties": {
+        "assetType": "protocol",
+        "protocolProperties": {
+          "type": "other",
+          "version": "Kerberos 5"
+        }
+      },
+      "properties": [
+        {
+          "name": "qr:category",
+          "value": "Kerberos"
+        },
+        {
+          "name": "qr:quantumVulnerable",
+          "value": "false"
+        },
+        {
+          "name": "qr:urgency",
+          "value": "None"
+        },
+        {
+          "name": "qr:startBy",
+          "value": ""
+        },
+        {
+          "name": "qr:shelfLifeYears",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/kerberos/svc-scan",
+      "name": "svc-scan",
+      "description": "Multifunction printer scan-to-folder",
+      "cryptoProperties": {
+        "assetType": "protocol",
+        "protocolProperties": {
+          "type": "other",
+          "version": "Kerberos 5"
+        }
+      },
+      "properties": [
+        {
+          "name": "qr:category",
+          "value": "Kerberos"
+        },
+        {
+          "name": "qr:quantumVulnerable",
+          "value": "false"
+        },
+        {
+          "name": "qr:urgency",
+          "value": "None"
+        },
+        {
+          "name": "qr:startBy",
+          "value": ""
+        },
+        {
+          "name": "qr:shelfLifeYears",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/kerberos/nas01",
+      "name": "NAS01$",
+      "description": "Linux NAS joined with Samba",
+      "cryptoProperties": {
+        "assetType": "protocol",
+        "protocolProperties": {
+          "type": "other",
+          "version": "Kerberos 5"
+        }
+      },
+      "properties": [
+        {
+          "name": "qr:category",
+          "value": "Kerberos"
+        },
+        {
+          "name": "qr:quantumVulnerable",
+          "value": "false"
+        },
+        {
+          "name": "qr:urgency",
+          "value": "None"
+        },
+        {
+          "name": "qr:startBy",
+          "value": ""
+        },
+        {
+          "name": "qr:shelfLifeYears",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/kerberos/gmsa-sqlprod",
+      "name": "gmsa-sqlprod$",
+      "description": "gmsa with SPN",
+      "cryptoProperties": {
+        "assetType": "protocol",
+        "protocolProperties": {
+          "type": "other",
+          "version": "Kerberos 5"
+        }
+      },
+      "properties": [
+        {
+          "name": "qr:category",
+          "value": "Kerberos"
+        },
+        {
+          "name": "qr:quantumVulnerable",
+          "value": "false"
+        },
+        {
+          "name": "qr:urgency",
+          "value": "None"
+        },
+        {
+          "name": "qr:startBy",
+          "value": ""
+        },
+        {
+          "name": "qr:shelfLifeYears",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/kerberos/domain-kerberos-policy",
+      "name": "Domain Kerberos policy",
+      "description": "Functional level Windows Server 2016",
+      "cryptoProperties": {
+        "assetType": "protocol",
+        "protocolProperties": {
+          "type": "other",
+          "version": "Kerberos 5"
+        }
+      },
+      "properties": [
+        {
+          "name": "qr:category",
+          "value": "Kerberos"
+        },
+        {
+          "name": "qr:quantumVulnerable",
+          "value": "false"
+        },
+        {
+          "name": "qr:urgency",
+          "value": "None"
+        },
+        {
+          "name": "qr:startBy",
+          "value": ""
+        },
+        {
+          "name": "qr:shelfLifeYears",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/kerberos/pkinit-smart-cards-and-windows-hello",
+      "name": "PKINIT (smart cards and Windows Hello)",
+      "description": "4490 users start Kerberos from a certificate or Windows Hello key",
+      "cryptoProperties": {
+        "assetType": "protocol",
+        "protocolProperties": {
+          "type": "other",
+          "version": "Kerberos 5"
+        }
+      },
+      "properties": [
+        {
+          "name": "qr:category",
+          "value": "Kerberos"
+        },
+        {
+          "name": "qr:quantumVulnerable",
+          "value": "true"
+        },
+        {
+          "name": "qr:urgency",
+          "value": "Overdue"
+        },
+        {
+          "name": "qr:startBy",
+          "value": "2021-01-01"
+        },
+        {
+          "name": "qr:shelfLifeYears",
+          "value": "7"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/algorithm/rsa-4096",
+      "name": "RSA 4096",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "pke",
+          "nistQuantumSecurityLevel": 0,
+          "parameterSetIdentifier": "4096"
+        }
+      }
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/algorithm/ml-dsa-65",
+      "name": "ML-DSA-65",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "signature",
+          "nistQuantumSecurityLevel": 3,
+          "parameterSetIdentifier": "65"
+        }
+      }
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/algorithm/ecdsa-p-256",
+      "name": "ECDSA P-256",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "signature",
+          "nistQuantumSecurityLevel": 0,
+          "parameterSetIdentifier": "P-256"
+        }
+      }
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/algorithm/rsa-1024",
+      "name": "RSA 1024",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "pke",
+          "nistQuantumSecurityLevel": 0,
+          "parameterSetIdentifier": "1024"
+        }
+      }
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/algorithm/x25519mlkem768",
+      "name": "X25519MLKEM768",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "kem",
+          "nistQuantumSecurityLevel": 3,
+          "parameterSetIdentifier": "ML-KEM-768"
+        }
+      }
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/algorithm/rsa-3072",
+      "name": "RSA 3072",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "pke",
+          "nistQuantumSecurityLevel": 0,
+          "parameterSetIdentifier": "3072"
+        }
+      }
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "crypto/algorithm/rsa-2048",
+      "name": "RSA 2048",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "pke",
+          "nistQuantumSecurityLevel": 0,
+          "parameterSetIdentifier": "2048"
+        }
+      }
+    }
+  ]
+}

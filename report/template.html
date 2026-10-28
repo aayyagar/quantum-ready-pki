@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quantum Readiness Report</title>
+<meta name="description" content="Classical cryptography across AD CS, LDAPS, RDP, IIS, WSUS and Kerberos, ranked by how long the data it protects must stay secret.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: headline (harvest-now exposure) first, then the Mosca chart that explains the ranking,
+   the ranked inventory, the fix-first list, the five-phase roadmap, Windows PQC capabilities and Kerberos. */
+:root{
+  --bg:#F5F4FA; --surface:#FFFFFF; --ink:#17152B; --muted:#5E5B77; --line:#DEDBEA;
+  --accent:#5B3FD6; --accent-soft:#ECE8FD;
+  --overdue:#C2362B; --now:#D9731A; --next:#C9A219; --later:#2C6FC9; --safe:#1E8A5A; --none:#9A97AE;
+  --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --body:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#100E1E; --surface:#18162B; --ink:#ECEAF7; --muted:#A09DBB; --line:#2C2946; --accent:#9C86FF; --accent-soft:#251F48;
+  --overdue:#FF6B5E; --now:#FF9B4A; --next:#E8C451; --later:#6AA6FF; --safe:#4CC38A; --none:#5F5C78; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#100E1E; --surface:#18162B; --ink:#ECEAF7; --muted:#A09DBB; --line:#2C2946; --accent:#9C86FF; --accent-soft:#251F48;
+  --overdue:#FF6B5E; --now:#FF9B4A; --next:#E8C451; --later:#6AA6FF; --safe:#4CC38A; --none:#5F5C78; color-scheme:dark}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 15px/1.55 var(--body)}
+.wrap{max-width:1140px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+.label{font:500 .7rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+header.top{padding-block:28px 6px;display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font:600 .85rem var(--mono);color:var(--muted)}
+.brand svg{width:28px;height:28px;color:var(--accent)}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(1.9rem,4.4vw,2.8rem);line-height:1.02;letter-spacing:-.025em;margin:10px 0 6px}
+h2{font:800 1.45rem var(--display);letter-spacing:-.01em;margin:40px 0 6px}
+.sub{color:var(--muted);margin:0 0 14px;max-width:760px;font-size:.92rem}
+.meta-line{color:var(--muted);font-size:.92rem;display:flex;gap:8px 16px;flex-wrap:wrap;align-items:center}
+.badge{display:inline-flex;align-items:center;gap:6px;font:500 .7rem var(--mono);letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--line);border-radius:999px;padding:3px 10px;color:var(--muted);background:var(--surface)}
+.badge.demo{border-color:var(--accent);color:var(--accent)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;min-width:0}
+.hero{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:16px;margin-top:22px}
+.hero h3{font:800 clamp(1.3rem,2.6vw,1.8rem)/1.18 var(--display);margin:0 0 12px;text-wrap:balance}
+.hero h3 b{color:var(--overdue)}
+.hero p{margin:0 0 12px;color:var(--muted);font-size:.9rem}
+.kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.kpi{border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.kpi b{display:block;font:800 1.7rem/1.1 var(--display);font-variant-numeric:tabular-nums}
+.kpi span{font-size:.82rem;color:var(--muted)}
+.kpi.red b{color:var(--overdue)} .kpi.green b{color:var(--safe)} .kpi.orange b{color:var(--now)}
+.stack{display:flex;height:14px;border-radius:999px;overflow:hidden;background:var(--line);margin:10px 0 8px}
+.stack span{display:block;height:100%}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.82rem;color:var(--muted)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.legend b{color:var(--ink);font-variant-numeric:tabular-nums}
+
+/* Mosca chart */
+.mosca{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px 18px 14px;overflow-x:auto}
+.mz{min-width:760px}
+.mz-axis{position:relative;height:22px;margin-left:250px;border-bottom:1px solid var(--line)}
+.mz-axis span{position:absolute;top:0;font:500 .68rem var(--mono);color:var(--muted);transform:translateX(-50%)}
+.mrow{display:grid;grid-template-columns:250px minmax(0,1fr);align-items:center;min-height:30px;border-bottom:1px dashed var(--line)}
+.mrow:last-child{border-bottom:0}
+.mrow .nm{font-size:.8rem;line-height:1.2;padding-right:10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mrow .nm small{color:var(--muted);font:400 .68rem var(--mono)}
+.mtrack{position:relative;height:30px}
+.mig,.shelf,.over{position:absolute;top:9px;height:12px}
+.mig{background:repeating-linear-gradient(135deg,var(--accent) 0 3px,transparent 3px 6px);border-radius:3px 0 0 3px;opacity:.75}
+.shelf{background:var(--later);opacity:.55;border-radius:0 3px 3px 0}
+.over{background:var(--overdue);border-radius:0 3px 3px 0}
+.qline{position:absolute;top:-24px;bottom:0;border-left:2px solid var(--overdue);pointer-events:none}
+.qline span,.nline span{position:absolute;top:3px;left:4px;background:var(--surface);padding-right:4px;font:600 .64rem var(--mono);white-space:nowrap}
+.qline span{color:var(--overdue)}
+.nline{position:absolute;top:-24px;bottom:0;border-left:2px dashed var(--muted);pointer-events:none}
+.nline span{color:var(--muted)}
+.mz-body{position:relative}
+
+table{width:100%;border-collapse:collapse;font-size:.85rem}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:500 .66rem var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+tbody tr{cursor:pointer}
+tbody tr:hover td{background:color-mix(in srgb,var(--accent) 5%,transparent)}
+tr.detail{cursor:default}
+tr.detail td{background:color-mix(in srgb,var(--accent) 4%,transparent)}
+.tbl{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow-x:auto}
+.nm2{font-weight:600}
+.nm2 small{display:block;font:400 .72rem var(--body);color:var(--muted);font-weight:400}
+.u{font:600 .66rem var(--mono);padding:2px 8px;border-radius:999px;white-space:nowrap;display:inline-block}
+.u.Overdue{background:color-mix(in srgb,var(--overdue) 14%,transparent);color:var(--overdue)}
+.u.Now{background:color-mix(in srgb,var(--now) 16%,transparent);color:var(--now)}
+.u.Next{background:color-mix(in srgb,var(--next) 20%,transparent);color:color-mix(in srgb,var(--next) 65%,var(--ink))}
+.u.Later{background:color-mix(in srgb,var(--later) 14%,transparent);color:var(--later)}
+.u.None{background:color-mix(in srgb,var(--none) 18%,transparent);color:var(--muted)}
+.sev{font:600 .64rem var(--mono);letter-spacing:.05em;text-transform:uppercase;padding:2px 6px;border-radius:5px;white-space:nowrap}
+.sev.Critical{background:var(--overdue);color:#fff} .sev.High{background:color-mix(in srgb,var(--overdue) 15%,transparent);color:var(--overdue)}
+.sev.Medium{background:color-mix(in srgb,var(--next) 20%,transparent);color:color-mix(in srgb,var(--next) 60%,var(--ink))} .sev.Low,.sev.Info{background:color-mix(in srgb,var(--none) 20%,transparent);color:var(--muted)}
+.pill{font:500 .7rem var(--mono);border:1px solid var(--line);border-radius:6px;padding:1px 6px;white-space:nowrap}
+.pill.safe{border-color:var(--safe);color:var(--safe)}
+.issues{display:grid;gap:8px;margin:4px 0}
+.issue{display:grid;grid-template-columns:auto minmax(0,1fr);gap:2px 10px}
+.issue p{margin:0;color:var(--muted);font-size:.84rem;grid-column:2}
+.path{margin-top:10px;font-size:.86rem}
+.path b{font-weight:600}
+
+.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+.toolbar select,.toolbar input{font:500 .85rem var(--body);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 10px;min-width:0}
+.toolbar input{width:min(260px,100%)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface)}
+.seg button{font:500 .8rem var(--body);border:0;background:transparent;color:var(--muted);padding:7px 11px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);color:#fff}
+
+.fix{display:grid;gap:8px}
+.fx{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--overdue);border-radius:12px;padding:11px 14px}
+.fx.High{border-left-color:var(--now)}
+.fx strong{font-weight:600}
+.fx p{margin:3px 0 0;color:var(--muted);font-size:.85rem}
+.fx .who{font:500 .74rem var(--mono);color:var(--muted)}
+
+.phases{display:grid;gap:12px}
+.phase{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.phase summary{cursor:pointer;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:4px 14px;align-items:center;list-style:none}
+.phase summary::-webkit-details-marker{display:none}
+.phase .no{font:800 1.6rem var(--display);color:var(--accent);width:1.4em}
+.phase h3{margin:0;font:700 1.05rem var(--display)}
+.phase .when{font:500 .74rem var(--mono);color:var(--muted);text-align:right;white-space:nowrap}
+.phase .txt{grid-column:2 / -1;color:var(--muted);font-size:.86rem;margin:0}
+.phase ul{margin:14px 0 0;padding:0;list-style:none;display:grid;gap:8px}
+.phase li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:2px 10px;font-size:.86rem;border-top:1px dashed var(--line);padding-top:8px}
+.phase li p{grid-column:2;margin:0;color:var(--muted);font-size:.82rem}
+
+.grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+.kb{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:12px}
+.files{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.files code{font:500 .76rem var(--mono);background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:3px 8px}
+.btn{font:600 .82rem var(--body);border:1px solid var(--line);border-radius:8px;padding:7px 12px;background:var(--surface);color:var(--ink);cursor:pointer}
+.btn:hover{border-color:var(--accent)}
+footer{padding-block:30px 40px;color:var(--muted);font:400 .78rem var(--mono);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+@media (max-width:880px){.hero,.grid2{grid-template-columns:1fr}.kb{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.phase summary{grid-template-columns:auto minmax(0,1fr)}.phase .when{grid-column:2;text-align:left}.kpis{grid-template-columns:1fr 1fr}.hide-sm{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div>
+      <div class="brand">
+        <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="14" width="18" height="13" rx="3"/><path d="M11 14v-3a5 5 0 0 1 10 0v3"/><ellipse cx="16" cy="20.5" rx="5.5" ry="2"/><ellipse cx="16" cy="20.5" rx="2" ry="5.5" transform="rotate(60 16 20.5)" opacity=".6"/><circle cx="16" cy="20.5" r="1" fill="currentColor"/></svg>
+        Quantum-Ready Windows PKI
+      </div>
+      <h1>Quantum readiness report</h1>
+      <div class="meta-line" id="meta"></div>
+    </div>
+    <span class="badge">Read-only assessment</span>
+  </header>
+
+  <div class="hero">
+    <div class="card" id="headline"></div>
+    <div class="card" id="kpis"></div>
+  </div>
+
+  <h2>Why the order is what it is</h2>
+  <p class="sub" id="moscaSub"></p>
+  <div class="mosca"><div class="mz" id="mosca"></div></div>
+  <div class="legend" style="margin-top:8px"><span><i style="background:repeating-linear-gradient(135deg,var(--accent) 0 3px,transparent 3px 6px)"></i>Migration time</span><span><i style="background:var(--later);opacity:.55"></i>Shelf life or remaining trust</span><span><i style="background:var(--overdue)"></i>Exposed after the quantum year</span></div>
+
+  <h2>Ranked inventory</h2>
+  <p class="sub">Every quantum-vulnerable asset, in the order its migration has to start. Select a row for the findings and the Windows-specific path.</p>
+  <div class="toolbar">
+    <div class="seg" role="group" aria-label="Category" id="fCat"></div>
+    <select id="fUrg" aria-label="Urgency"><option value="">Any urgency</option></select>
+    <input id="fQ" type="search" placeholder="Search host, template or finding" aria-label="Search inventory">
+    <span class="label" id="cnt"></span>
+  </div>
+  <div class="tbl"><table><thead><tr><th>#</th><th>Asset</th><th class="hide-sm">Crypto</th><th class="hide-sm">Protects</th><th class="n">Shelf life</th><th>Start by</th><th>Status</th></tr></thead><tbody id="inv"></tbody></table></div>
+
+  <div class="grid2">
+    <div><h2>Fix first</h2><p class="sub">Broken with ordinary computers today. These come before any post-quantum work.</p><div class="fix" id="fix"></div><div style="margin-top:10px"><button class="btn" id="fixMore" type="button">Show all</button></div></div>
+    <div><h2>What Windows can do today</h2><p class="sub">Post-quantum features in Windows and AD CS, and how much of this estate can use them.</p><div class="tbl"><table id="caps"></table></div>
+      <div class="card" style="margin-top:12px" id="tlsMix"></div></div>
+  </div>
+
+  <h2>Roadmap</h2>
+  <p class="sub">Five phases. Each item carries the start-by date of its asset; Phase 0 starts now.</p>
+  <div class="phases" id="phases"></div>
+
+  <h2>Kerberos</h2>
+  <p class="sub">Kerberos tickets use symmetric keys, and AES is not meaningfully weakened by quantum computers. RC4 and DES are broken today, and since the April 2026 update the KDC refuses them by default. PKINIT is the part that is classical public-key cryptography, and it appears in the ranking above.</p>
+  <div class="kb" id="kb"></div>
+  <div class="tbl"><table id="krb"></table></div>
+
+  <p class="label" style="margin-top:22px">Also produced: <span class="files"><code>cbom.cdx.json</code><code>inventory.csv</code><code>roadmap.md</code><code>findings.json</code></span></p>
+  <footer><span id="foot"></span><span>Nothing was changed. Verify every fix in a test environment first.</span></footer>
+</div>
+<script>
+const DATA = /*__QR_DATA__*/null;
+(function(){
+  const arr = x => x == null ? [] : (Array.isArray(x) ? x : [x]);
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const n = x => Number(x || 0).toLocaleString('en-US');
+  const S = DATA.Summary, ranked = arr(DATA.Ranked), assets = arr(DATA.Assets), Q = S.QuantumYear;
+  const fmt = d => d ? new Date(d + 'T00:00:00').toLocaleDateString('en-GB', {month:'short', year:'numeric'}) : '–';
+  const yr = d => { const t = new Date(d + 'T00:00:00'); return t.getFullYear() + (t - new Date(t.getFullYear(), 0, 1)) / 31557600000; };
+  const nowY = yr(S.Now);
+  const urgText = a => a.Urgency === 'Overdue' ? 'Overdue ' + a.YearsLate + ' y' : ({Now:'Start this year', Next:'Within 3 years', Later:'Later', None:'–'})[a.Urgency];
+
+  document.getElementById('meta').innerHTML = '<span>' + esc(DATA.Scope.Label) + '</span><span>Assessed ' + esc(S.Now) + ' · planning year ' + Q + '</span>' + (DATA.Scope.Demo ? '<span class="badge demo">Demo estate</span>' : '');
+  document.getElementById('foot').textContent = DATA.Tool + ' v' + DATA.Version + ' · MIT license';
+
+  const cnt = {}; ranked.forEach(a => cnt[a.Urgency] = (cnt[a.Urgency] || 0) + 1);
+  const seg = [['Overdue', 'var(--overdue)'], ['Now', 'var(--now)'], ['Next', 'var(--next)'], ['Later', 'var(--later)']];
+  document.getElementById('headline').innerHTML =
+    '<span class="label">Harvest now, decrypt later</span><h3><b>' + n(S.HarvestExposed) + ' systems</b> protect data that must stay secret past ' + Q + ', using encryption a quantum computer could break.</h3>' +
+    '<p>Anything recorded from them today can be read later. ' + n(S.HarvestRegulated) + ' of them carry restricted or regulated data with 15 years or more of shelf life.</p>' +
+    '<span class="label">' + n(S.QuantumVulnerable) + ' quantum-vulnerable assets by when migration must start</span>' +
+    '<div class="stack" role="img" aria-label="' + seg.map(s => s[0] + ' ' + (cnt[s[0]] || 0)).join(', ') + '">' + seg.filter(s => cnt[s[0]]).map(s => '<span style="width:' + (100 * cnt[s[0]] / S.QuantumVulnerable) + '%;background:' + s[1] + '"></span>').join('') + '</div>' +
+    '<div class="legend">' + seg.map(s => '<span><i style="background:' + s[1] + '"></i>' + ({Overdue:'Overdue', Now:'Start this year', Next:'Within 3 years', Later:'Later'})[s[0]] + ' <b>' + (cnt[s[0]] || 0) + '</b></span>').join('') + '</div>';
+  document.getElementById('kpis').innerHTML = '<div class="kpis">' +
+    '<div class="kpi red"><b>' + n(S.BrokenToday) + '</b><span>assets broken with ordinary computers today (SHA-1, RSA 1024, RC4, DES, HTTP)</span></div>' +
+    '<div class="kpi orange"><b>' + n(S.TrustedPastQuantum) + '</b><span>classical CAs still trusted after ' + Q + '</span></div>' +
+    '<div class="kpi"><b>' + n(S.HybridAvailableOff) + '</b><span>endpoint' + (S.HybridAvailableOff === 1 ? '' : 's') + ' where hybrid ML-KEM is one setting away</span></div>' +
+    '<div class="kpi green"><b>' + n(S.QuantumSafe) + '</b><span>assets already using ML-DSA or hybrid ML-KEM</span></div>' +
+    '<div class="kpi"><b>' + n(S.NeedOsUpgrade) + '</b><span>TLS endpoints on a Windows release with no ML-KEM</span></div>' +
+    '<div class="kpi"><b>' + n(S.EncryptionTemplates) + '</b><span>encryption templates with no post-quantum option in AD CS yet</span></div></div>';
+
+  // Mosca chart
+  document.getElementById('moscaSub').innerHTML = 'Mosca\'s inequality: if the years data must stay secret plus the years a migration takes reach past the arrival of a quantum computer, the data is already at risk. Each bar starts today: migration time, then shelf life (or, for signatures, how long certificates issued at the end of the migration stay trusted). Red is the part that lands after ' + Q + '. The quantum year is ' + Q + ' (' + S.YearsToQuantum + ' years away); change it with <code>-QuantumYear</code>.';
+  const rows = ranked.slice(0, 18);
+  const lead = a => { const mig = Number(a.MigrationYears || 0); const tail = a.ShelfLifeYears ? Number(a.ShelfLifeYears) : (a.Category === 'Template' ? (a.Extra && a.Extra.ValidityDays ? a.Extra.ValidityDays / 365.25 : 1) : (a.TrustUntil ? Math.max(0, yr(a.TrustUntil) - nowY - mig) : 1)); return [mig, tail]; };
+  const y0 = Math.floor(nowY), y1 = Math.max(Q + 2, Math.min(2056, Math.ceil(Math.max(...rows.map(a => nowY + lead(a)[0] + lead(a)[1])))));
+  const X = y => (100 * (y - y0) / (y1 - y0));
+  const ticks = []; for (let y = y0; y <= y1; y += (y1 - y0 > 20 ? 5 : 2)) ticks.push(y);
+  const qY = Q;
+  document.getElementById('mosca').innerHTML = '<div class="mz-axis">' + ticks.filter(t => (t < Q - 1.6 || t > Q + 3.5) && (t < 2033.4 || t > 2041.5)).map(t => '<span style="left:' + X(t) + '%">' + t + '</span>').join('') + '</div>' +
+    '<div style="position:relative">' +
+    rows.map(a => { const [m, t] = lead(a); const s = nowY, e1 = s + m, e2 = e1 + t; const ov = Math.max(qY, e1);
+      return '<div class="mrow"><div class="nm" title="' + esc(a.Name) + '">' + esc(a.Name) + ' <small>' + esc(a.Category) + '</small></div><div class="mtrack">' +
+        '<div class="mig" style="left:' + X(s) + '%;width:' + (X(e1) - X(s)) + '%"></div>' +
+        '<div class="shelf" style="left:' + X(e1) + '%;width:' + (X(Math.min(e2, qY)) - X(e1)) + '%"></div>' +
+        (e2 > qY ? '<div class="over" style="left:' + X(Math.max(e1, qY)) + '%;width:' + (X(e2) - X(Math.max(e1, qY))) + '%"></div>' : '') +
+        (e1 > qY ? '<div class="over" style="left:' + X(qY) + '%;width:' + (X(e1) - X(qY)) + '%;opacity:.5"></div>' : '') +
+        '</div></div>'; }).join('') +
+    '<div style="position:absolute;inset:0 0 0 250px;pointer-events:none"><div class="qline" style="left:' + X(qY) + '%"><span>' + qY + ' quantum</span></div>' +
+    (qY !== 2035 && 2035 <= y1 ? '<div class="nline" style="left:' + X(2035) + '%"><span>2035 NIST disallows RSA/ECC</span></div>' : '') + '</div></div>' +
+    (ranked.length > rows.length ? '<p class="label" style="margin:10px 0 0">Top ' + rows.length + ' of ' + ranked.length + '. The full list is below.</p>' : '');
+
+  // Inventory
+  const cats = ['All', 'CA', 'Template', 'Endpoint', 'Kerberos'];
+  let cat = 'All', open = null;
+  const fCat = document.getElementById('fCat');
+  fCat.innerHTML = cats.map(c => '<button type="button" aria-pressed="' + (c === 'All') + '" data-c="' + c + '">' + (c === 'All' ? 'All' : c === 'CA' ? 'CAs' : c === 'Kerberos' ? 'Kerberos' : c + 's') + '</button>').join('');
+  fCat.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; cat = b.dataset.c; fCat.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b)); draw(); });
+  const fU = document.getElementById('fUrg');
+  ['Overdue', 'Now', 'Next', 'Later'].forEach(u => fU.insertAdjacentHTML('beforeend', '<option value="' + u + '">' + ({Overdue:'Overdue', Now:'Start this year', Next:'Within 3 years', Later:'Later'})[u] + '</option>'));
+  const fQ = document.getElementById('fQ');
+  const crypto = a => [a.Algorithm, a.KeyExchange && a.Category === 'Endpoint' ? a.KeyExchange : null].filter(Boolean).map(x => '<span class="pill' + (/ML-|hybrid/i.test(x) ? ' safe' : '') + '">' + esc(x) + '</span>').join(' ');
+  const detail = a => '<tr class="detail"><td></td><td colspan="6"><div class="issues">' + arr(a.Issues).map(i => '<div class="issue"><span class="sev ' + i.Severity + '">' + i.Severity + '</span><div><strong>' + esc(i.Title) + '</strong> <span class="label">' + i.Code + ' · phase ' + i.Phase + '</span></div><p>' + esc(i.Fix) + '</p></div>').join('') + '</div>' +
+    '<div class="path"><b>Windows path:</b> ' + esc(a.PqcPath) + '</div>' +
+    '<div class="label" style="margin-top:8px">' + [a.Host ? 'Host ' + esc(a.Host) : '', a.Os ? esc(a.Os) : '', a.Signature ? 'Signature ' + esc(a.Signature) : '', a.ConfidentialityStartBy ? 'Confidentiality start-by ' + a.ConfidentialityStartBy : '', a.AuthenticityStartBy ? 'Authenticity start-by ' + a.AuthenticityStartBy : '', 'Migration ' + a.MigrationYears + ' y'].filter(Boolean).join(' · ') + '</div></td></tr>';
+  function draw(){
+    const q = fQ.value.trim().toLowerCase(), u = fU.value;
+    const list = ranked.filter(a => (cat === 'All' || a.Category === cat) && (!u || a.Urgency === u) && (!q || JSON.stringify([a.Name, a.Host, a.Detail, a.Algorithm, arr(a.Issues).map(i => i.Title)]).toLowerCase().includes(q)));
+    document.getElementById('cnt').textContent = list.length + ' of ' + ranked.length;
+    document.getElementById('inv').innerHTML = list.map(a => '<tr data-id="' + esc(a.Id) + '" tabindex="0" aria-expanded="' + (open === a.Id) + '"><td class="n">' + a.Rank + '</td><td class="nm2">' + esc(a.Name) + '<small>' + esc(a.Category) + ' · ' + esc(a.Detail) + '</small></td><td class="hide-sm">' + crypto(a) + '</td><td class="hide-sm">' + esc(a.Exposure) + '</td><td class="n">' + (a.ShelfLifeYears ? a.ShelfLifeYears + ' y' : '–') + '</td><td>' + fmt(a.StartBy) + '</td><td><span class="u ' + a.Urgency + '">' + urgText(a) + '</span></td></tr>' + (open === a.Id ? detail(a) : '')).join('') || '<tr><td colspan="7">Nothing matches.</td></tr>';
+  }
+  const inv = document.getElementById('inv');
+  const toggle = tr => { if (!tr || !tr.dataset.id) return; open = open === tr.dataset.id ? null : tr.dataset.id; draw(); };
+  inv.addEventListener('click', e => toggle(e.target.closest('tr')));
+  inv.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(e.target.closest('tr')); } });
+  fU.addEventListener('change', draw); fQ.addEventListener('input', draw); draw();
+
+  // Fix first
+  const fix = arr(DATA.FixFirst); let all = false;
+  const drawFix = () => { document.getElementById('fix').innerHTML = (all ? fix : fix.slice(0, 8)).map(f => '<div class="fx ' + f.Severity + '"><div><span class="sev ' + f.Severity + '">' + f.Severity + '</span> <strong>' + esc(f.Title) + '</strong></div><div class="who">' + esc(f.Asset) + ' · ' + esc(f.Category) + ' · ' + f.Code + '</div><p>' + esc(f.Fix) + '</p></div>').join('');
+    const b = document.getElementById('fixMore'); b.hidden = fix.length <= 8; b.textContent = all ? 'Show fewer' : 'Show all ' + fix.length; };
+  document.getElementById('fixMore').addEventListener('click', () => { all = !all; drawFix(); }); drawFix();
+
+  document.getElementById('caps').innerHTML = '<tr><th>Feature</th><th>Where</th><th>Since</th></tr>' + arr(DATA.Capabilities).map(c => '<tr><td><strong>' + esc(c.Feature) + '</strong><br><span style="color:var(--muted);font-size:.8rem">' + esc(c.Note) + '</span></td><td>' + esc(c.Where) + '</td><td>' + esc(c.Since) + '</td></tr>').join('');
+  const eps = assets.filter(a => a.Category === 'Endpoint'), tl = [['Hybrid ML-KEM on', S.HybridOn, 'var(--safe)'], ['Available, off', S.HybridAvailableOff, 'var(--now)'], ['Needs Windows Server 2025', S.NeedOsUpgrade, 'var(--overdue)']];
+  const other = eps.length - S.HybridOn - S.HybridAvailableOff - S.NeedOsUpgrade; if (other > 0) tl.push(['No confidential data or cleartext', other, 'var(--none)']);
+  document.getElementById('tlsMix').innerHTML = '<span class="label">Key exchange on ' + eps.length + ' LDAPS, RDP, IIS and WSUS endpoints</span><div class="stack">' + tl.filter(t => t[1]).map(t => '<span style="width:' + (100 * t[1] / eps.length) + '%;background:' + t[2] + '"></span>').join('') + '</div><div class="legend">' + tl.map(t => '<span><i style="background:' + t[2] + '"></i>' + t[0] + ' <b>' + t[1] + '</b></span>').join('') + '</div>';
+
+  // Roadmap
+  document.getElementById('phases').innerHTML = arr(DATA.Phases).map(p => { const items = arr(p.Items);
+    return '<details class="phase"' + (p.Number === 0 ? ' open' : '') + '><summary><span class="no">' + p.Number + '</span><h3>' + esc(p.Name) + '</h3><span class="when">' + items.length + ' item' + (items.length === 1 ? '' : 's') + (p.StartBy ? ' · start ' + fmt(p.StartBy) : '') + '</span><p class="txt">' + esc(p.Text) + '</p></summary>' +
+      (items.length ? '<ul>' + items.slice(0, 40).map(i => '<li><span class="sev ' + i.Severity + '">' + i.Severity + '</span><div><strong>' + esc(i.Asset) + '</strong>: ' + esc(i.Title) + '</div><p>' + esc(i.Fix) + '</p></li>').join('') + '</ul>' + (items.length > 40 ? '<p class="label">+' + (items.length - 40) + ' more in roadmap.md</p>' : '') : '<p class="txt" style="margin-top:10px">Nothing to do.</p>') + '</details>'; }).join('');
+
+  // Kerberos
+  const K = DATA.Kerberos;
+  if (K) { const st = K.Stats, ev = st.Events || {};
+    document.getElementById('kb').innerHTML = [['Accounts with SPNs', st.Accounts, ''], ['RC4 explicitly enabled', st.Rc4, 'red'], ['No AES keys', st.NoAesKeys, 'red'], ['DES enabled', st.Des, 'red'], ['Already refused by the KDC', st.Blocked, 'orange'], ['Domain default', arr(K.DefaultEncTypes).join(' + ') + (K.ExplicitDefault ? '' : ' (KDC default)'), 'green']]
+      .map(k => '<div class="kpi ' + k[2] + '"><b style="' + (typeof k[1] === 'string' ? 'font-size:1rem' : '') + '">' + esc(k[1]) + '</b><span>' + k[0] + '</span></div>').join('');
+    const kr = assets.filter(a => a.Category === 'Kerberos' && a.Extra && a.Extra.PwdLastSet);
+    document.getElementById('krb').innerHTML = '<tr><th>Account</th><th>Encryption types</th><th>Password set</th><th>KDC events</th><th>Findings</th></tr>' + kr.map(a => '<tr><td class="nm2">' + esc(a.Name) + '<small>' + esc(a.Detail) + '</small></td><td>' + arr(a.Extra.Effective).map(x => '<span class="pill' + (/AES/.test(x) ? ' safe' : '') + '">' + esc(x) + '</span>').join(' ') + (a.Extra.ExplicitSetting ? '' : ' <span class="label">default</span>') + '</td><td>' + esc(a.Extra.PwdLastSet) + '</td><td>' + (Object.keys(a.Extra.Events || {}).map(k => k + ' × ' + a.Extra.Events[k]).join(', ') || '–') + '</td><td>' + arr(a.Issues).map(i => '<span class="sev ' + i.Severity + '">' + i.Code + '</span> ' + esc(i.Title)).join('<br>') + '</td></tr>').join('');
+    document.getElementById('krb').insertAdjacentHTML('beforeend', '');
+  }
+})();
+</script>
+</body>
+</html>

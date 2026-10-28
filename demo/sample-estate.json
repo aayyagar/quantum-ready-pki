@@ -1,0 +1,1354 @@
+{
+ "label": "Contoso (fictional demo estate)",
+ "now": "2026-10-27",
+ "forest": "contoso.com",
+ "domain": "contoso.com",
+ "cas": [
+  {
+   "name": "Contoso Root CA",
+   "host": "CORP-ROOTCA",
+   "os": "Windows Server 2016",
+   "type": "Root",
+   "offline": true,
+   "cert": {
+    "subject": "CN=Contoso Root CA",
+    "issuer": "CN=Contoso Root CA",
+    "keyAlgorithm": "RSA",
+    "keySize": 4096,
+    "signatureAlgorithm": "sha256RSA",
+    "notBefore": "2016-03-01",
+    "notAfter": "2036-03-01",
+    "thumbprint": "8B0E7153BF7C3706D85C524E440066559A6656C9",
+    "selfSigned": true
+   },
+   "publishedTemplates": []
+  },
+  {
+   "name": "Contoso Issuing CA 01",
+   "host": "CORP-CA01",
+   "os": "Windows Server 2019",
+   "type": "Issuing",
+   "offline": false,
+   "cert": {
+    "subject": "CN=Contoso Issuing CA 01",
+    "issuer": "CN=Contoso Root CA",
+    "keyAlgorithm": "RSA",
+    "keySize": 2048,
+    "signatureAlgorithm": "sha256RSA",
+    "notBefore": "2021-05-10",
+    "notAfter": "2031-05-10",
+    "thumbprint": "0BD5482A90A29B9FA5FF5180BC0DBC0E15637EBB",
+    "selfSigned": false
+   },
+   "publishedTemplates": [
+    "Contoso-WebServer",
+    "Contoso-WebServer-v4",
+    "Contoso-KDC",
+    "Contoso-Computer",
+    "Contoso-User",
+    "Contoso-EFS-Recovery",
+    "Contoso-SMIME",
+    "Contoso-CodeSigning",
+    "Contoso-SmartCard",
+    "Contoso-RDP",
+    "Contoso-OCSP"
+   ]
+  },
+  {
+   "name": "Contoso Legacy CA",
+   "host": "CORP-CA-OLD",
+   "os": "Windows Server 2012 R2",
+   "type": "Issuing",
+   "offline": false,
+   "cert": {
+    "subject": "CN=Contoso Legacy CA",
+    "issuer": "CN=Contoso Legacy CA",
+    "keyAlgorithm": "RSA",
+    "keySize": 2048,
+    "signatureAlgorithm": "sha1RSA",
+    "notBefore": "2014-02-01",
+    "notAfter": "2029-02-01",
+    "thumbprint": "8E3B91D26AB4A829A95249F512C17B8ED411FA64",
+    "selfSigned": true
+   },
+   "publishedTemplates": [
+    "WebServer",
+    "Contoso-WSUS-Legacy"
+   ]
+  },
+  {
+   "name": "Contoso PQC Pilot CA",
+   "host": "CORP-PQCA01",
+   "os": "Windows Server 2025",
+   "type": "Root",
+   "offline": false,
+   "cert": {
+    "subject": "CN=Contoso PQC Pilot CA",
+    "issuer": "CN=Contoso PQC Pilot CA",
+    "keyAlgorithm": "ML-DSA-65",
+    "keySize": 0,
+    "signatureAlgorithm": "ML-DSA-65",
+    "notBefore": "2026-06-15",
+    "notAfter": "2041-06-15",
+    "thumbprint": "4D35DB41D94E5EFAF89FC43C5FA52F8B2B19B8F8",
+    "selfSigned": true
+   },
+   "publishedTemplates": [
+    "PQC-WebServer-MLDSA"
+   ]
+  }
+ ],
+ "templates": [
+  {
+   "name": "Contoso-WebServer",
+   "displayName": "Contoso WebServer",
+   "schemaVersion": 2,
+   "keyAlgorithm": "RSA",
+   "minKeySize": 2048,
+   "hashAlgorithm": "SHA256",
+   "provider": "CSP",
+   "ekus": [
+    "1.3.6.1.5.5.7.3.1"
+   ],
+   "keyUsage": [
+    "DigitalSignature",
+    "KeyEncipherment"
+   ],
+   "validityDays": 730,
+   "archival": false,
+   "issuedLast90Days": 140
+  },
+  {
+   "name": "Contoso-WebServer-v4",
+   "displayName": "Contoso WebServer v4",
+   "schemaVersion": 4,
+   "keyAlgorithm": "RSA",
+   "minKeySize": 3072,
+   "hashAlgorithm": "SHA256",
+   "provider": "KSP",
+   "ekus": [
+    "1.3.6.1.5.5.7.3.1"
+   ],
+   "keyUsage": [
+    "DigitalSignature"
+   ],
+   "validityDays": 397,
+   "archival": false,
+   "issuedLast90Days": 85
+  },
+  {
+   "name": "Contoso-KDC",
+   "displayName": "Contoso Kerberos Authentication",
+   "schemaVersion": 2,
+   "keyAlgorithm": "RSA",
+   "minKeySize": 2048,
+   "hashAlgorithm": "SHA256",
+   "provider": "CSP",
+   "ekus": [
+    "1.3.6.1.5.5.7.3.2",
+    "1.3.6.1.5.5.7.3.1",
+    "1.3.6.1.4.1.311.20.2.2",
+    "1.3.6.1.5.2.3.5"
+   ],
+   "keyUsage": [
+    "DigitalSignature",
+    "KeyEncipherment"
+   ],
+   "validityDays": 365,
+   "archival": false,
+   "issuedLast90Days": 6
+  },
+  {
+   "name": "Contoso-Computer",
+   "displayName": "Contoso Computer",
+   "schemaVersion": 2,
+   "keyAlgorithm": "RSA",
+   "minKeySize": 2048,
+   "hashAlgorithm": "SHA256",
+   "provider": "CSP",
+   "ekus": [
+    "1.3.6.1.5.5.7.3.2",
+    "1.3.6.1.5.5.7.3.1"
+   ],
+   "keyUsage": [
+    "DigitalSignature",
+    "KeyEncipherment"
+   ],
+   "validityDays": 365,
+   "archival": false,
+   "issuedLast90Days": 2410
+  },
+  {
+   "name": "Contoso-User",
+   "displayName": "Contoso User",
+   "schemaVersion": 2,
+   "keyAlgorithm": "RSA",
+   "minKeySize": 2048,
+   "hashAlgorithm": "SHA256",
+   "provider": "CSP",
+   "ekus": [
+    "1.3.6.1.5.5.7.3.2",
+    "1.3.6.1.5.5.7.3.4",
+    "1.3.6.1.4.1.311.10.3.4"
+   ],
+   "keyUsage": [
+    "DigitalSignature",
+    "KeyEncipherment"
+   ],
+   "validityDays": 365,
+   "archival": true,
+   "issuedLast90Days": 3120,
+   "classification": "Restricted"
+  },
+  {
+   "name": "Contoso-EFS-Recovery",
+   "displayName": "Contoso EFS Recovery",
+   "schemaVersion": 2,
+   "keyAlgorithm": "RSA",
+   "minKeySize": 2048,
+   "hashAlgorithm": "SHA256",
+   "provider": "CSP",
+   "ekus": [
+    "1.3.6.1.4.1.311.10.3.4.1"
+   ],
+   "keyUsage": [
+    "KeyEncipherment"
+   ],
+   "validityDays": 1825,
+   "archival": true,
+   "issuedLast90Days": 2,
+   "classification": "Restricted"
+  },
+  {
+   "name": "Contoso-SMIME",
+   "displayName": "Contoso Legal & Finance S/MIME",
+   "schemaVersion": 3,
+   "keyAlgorithm": "RSA",
+   "minKeySize": 2048,
+   "hashAlgorithm": "SHA256",
+   "provider": "KSP",
+   "ekus": [
+    "1.3.6.1.5.5.7.3.4"
+   ],
+   "keyUsage": [
+    "DigitalSignature",
+    "KeyEncipherment"
+   ],
+   "validityDays": 730,
+   "archival": true,
+   "issuedLast90Days": 905,
+   "classification": "Regulated"
+  },
+  {
+   "name": "Contoso-CodeSigning",
+   "displayName": "Contoso CodeSigning",
+   "schemaVersion": 2,
+   "keyAlgorithm": "RSA",
+   "minKeySize": 3072,
+   "hashAlgorithm": "SHA256",
+   "provider": "CSP",
+   "ekus": [
+    "1.3.6.1.5.5.7.3.3"
+   ],
+   "keyUsage": [
+    "DigitalSignature"
+   ],
+   "validityDays": 1095,
+   "archival": false,
+   "issuedLast90Days": 12
+  },
+  {
+   "name": "Contoso-SmartCard",
+   "displayName": "Contoso SmartCard",
+   "schemaVersion": 2,
+   "keyAlgorithm": "RSA",
+   "minKeySize": 2048,
+   "hashAlgorithm": "SHA256",
+   "provider": "CSP",
+   "ekus": [
+    "1.3.6.1.4.1.311.20.2.2",
+    "1.3.6.1.5.5.7.3.2"
+   ],
+   "keyUsage": [
+    "DigitalSignature",
+    "KeyEncipherment"
+   ],
+   "validityDays": 1095,
+   "archival": false,
+   "issuedLast90Days": 410
+  },
+  {
+   "name": "Contoso-RDP",
+   "displayName": "Contoso RDP",
+   "schemaVersion": 3,
+   "keyAlgorithm": "RSA",
+   "minKeySize": 2048,
+   "hashAlgorithm": "SHA256",
+   "provider": "KSP",
+   "ekus": [
+    "1.3.6.1.4.1.311.54.1.2"
+   ],
+   "keyUsage": [
+    "DigitalSignature",
+    "KeyEncipherment"
+   ],
+   "validityDays": 365,
+   "archival": false,
+   "issuedLast90Days": 262
+  },
+  {
+   "name": "Contoso-OCSP",
+   "displayName": "Contoso OCSP",
+   "schemaVersion": 3,
+   "keyAlgorithm": "RSA",
+   "minKeySize": 2048,
+   "hashAlgorithm": "SHA256",
+   "provider": "KSP",
+   "ekus": [
+    "1.3.6.1.5.5.7.3.9"
+   ],
+   "keyUsage": [
+    "DigitalSignature"
+   ],
+   "validityDays": 14,
+   "archival": false,
+   "issuedLast90Days": 52
+  },
+  {
+   "name": "WebServer",
+   "displayName": "Web Server (built-in v1)",
+   "schemaVersion": 1,
+   "keyAlgorithm": "RSA",
+   "minKeySize": 1024,
+   "hashAlgorithm": "SHA1",
+   "provider": "CSP",
+   "ekus": [
+    "1.3.6.1.5.5.7.3.1"
+   ],
+   "keyUsage": [
+    "DigitalSignature",
+    "KeyEncipherment"
+   ],
+   "validityDays": 730,
+   "archival": false,
+   "issuedLast90Days": 9
+  },
+  {
+   "name": "Contoso-WSUS-Legacy",
+   "displayName": "Contoso WSUS Legacy",
+   "schemaVersion": 2,
+   "keyAlgorithm": "RSA",
+   "minKeySize": 2048,
+   "hashAlgorithm": "SHA1",
+   "provider": "CSP",
+   "ekus": [
+    "1.3.6.1.5.5.7.3.1"
+   ],
+   "keyUsage": [
+    "DigitalSignature",
+    "KeyEncipherment"
+   ],
+   "validityDays": 1095,
+   "archival": false,
+   "issuedLast90Days": 3
+  },
+  {
+   "name": "PQC-WebServer-MLDSA",
+   "displayName": "PQC Web Server (ML-DSA-65 pilot)",
+   "schemaVersion": 4,
+   "keyAlgorithm": "ML-DSA-65",
+   "minKeySize": 0,
+   "hashAlgorithm": "ML-DSA-65",
+   "provider": "KSP",
+   "ekus": [
+    "1.3.6.1.5.5.7.3.1"
+   ],
+   "keyUsage": [
+    "DigitalSignature"
+   ],
+   "validityDays": 365,
+   "archival": false,
+   "issuedLast90Days": 4
+  }
+ ],
+ "endpoints": [
+  {
+   "host": "CORP-DC01",
+   "service": "LDAPS",
+   "port": 636,
+   "os": "Windows Server 2022",
+   "protocol": "TLS 1.3",
+   "cipherSuite": "TLS_AES_256_GCM_SHA384",
+   "keyExchange": "x25519",
+   "cert": {
+    "subject": "CN=CORP-DC01.contoso.com",
+    "issuer": "CN=Contoso Issuing CA 01",
+    "keyAlgorithm": "RSA",
+    "keySize": 2048,
+    "signatureAlgorithm": "sha256RSA",
+    "notBefore": "2026-02-11",
+    "notAfter": "2027-02-11",
+    "thumbprint": "9A50F8A8E9BB8BDB5EBA456BF92D5D98065E5751",
+    "selfSigned": false,
+    "template": "Contoso-KDC"
+   }
+  },
+  {
+   "host": "CORP-DC02",
+   "service": "LDAPS",
+   "port": 636,
+   "os": "Windows Server 2022",
+   "protocol": "TLS 1.3",
+   "cipherSuite": "TLS_AES_256_GCM_SHA384",
+   "keyExchange": "x25519",
+   "cert": {
+    "subject": "CN=CORP-DC02.contoso.com",
+    "issuer": "CN=Contoso Issuing CA 01",
+    "keyAlgorithm": "RSA",
+    "keySize": 2048,
+    "signatureAlgorithm": "sha256RSA",
+    "notBefore": "2026-02-11",
+    "notAfter": "2027-02-11",
+    "thumbprint": "F75143A5F61DEBC267B0BC8D3B1939A9B4DDBE45",
+    "selfSigned": false,
+    "template": "Contoso-KDC"
+   }
+  },
+  {
+   "host": "CORP-DC03",
+   "service": "LDAPS",
+   "port": 636,
+   "os": "Windows Server 2019",
+   "protocol": "TLS 1.2",
+   "cipherSuite": "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384",
+   "keyExchange": "secp384r1",
+   "cert": {
+    "subject": "CN=CORP-DC03.contoso.com",
+    "issuer": "CN=Contoso Issuing CA 01",
+    "keyAlgorithm": "RSA",
+    "keySize": 2048,
+    "signatureAlgorithm": "sha256RSA",
+    "notBefore": "2025-12-01",
+    "notAfter": "2026-12-01",
+    "thumbprint": "CF642B0C3A4ACDD7F9FCC589F8D0A9F94F03E791",
+    "selfSigned": false,
+    "template": "Contoso-KDC"
+   }
+  },
+  {
+   "host": "BR-DC01",
+   "service": "LDAPS",
+   "port": 636,
+   "os": "Windows Server 2016",
+   "protocol": "TLS 1.2",
+   "cipherSuite": "TLS_RSA_WITH_AES_256_CBC_SHA256",
+   "keyExchange": "RSA",
+   "cert": {
+    "subject": "CN=BR-DC01.contoso.com",
+    "issuer": "CN=Contoso Issuing CA 01",
+    "keyAlgorithm": "RSA",
+    "keySize": 2048,
+    "signatureAlgorithm": "sha256RSA",
+    "notBefore": "2026-01-20",
+    "notAfter": "2027-01-20",
+    "thumbprint": "4C0F87F17F8499FF30499A90EBB4108E360DDFCF",
+    "selfSigned": false,
+    "template": "Contoso-KDC"
+   },
+   "site": "Branch-Denver"
+  },
+  {
+   "host": "CORP-DC01",
+   "service": "RDP",
+   "port": 3389,
+   "os": "Windows Server 2022",
+   "protocol": "TLS 1.3",
+   "cipherSuite": "TLS_AES_256_GCM_SHA384",
+   "keyExchange": "x25519",
+   "cert": {
+    "subject": "CN=CORP-DC01.contoso.com",
+    "issuer": "CN=Contoso Issuing CA 01",
+    "keyAlgorithm": "RSA",
+    "keySize": 2048,
+    "signatureAlgorithm": "sha256RSA",
+    "notBefore": "2026-03-01",
+    "notAfter": "2027-03-01",
+    "thumbprint": "C69E290D9F945FFA4D1278220AD2CF1337349E45",
+    "selfSigned": false,
+    "template": "Contoso-RDP"
+   },
+   "classification": "Restricted"
+  },
+  {
+   "host": "CORP-DC03",
+   "service": "RDP",
+   "port": 3389,
+   "os": "Windows Server 2019",
+   "protocol": "TLS 1.2",
+   "cipherSuite": "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384",
+   "keyExchange": "secp384r1",
+   "cert": {
+    "subject": "CN=CORP-DC03.contoso.com",
+    "issuer": "CN=CORP-DC03.contoso.com",
+    "keyAlgorithm": "RSA",
+    "keySize": 2048,
+    "signatureAlgorithm": "sha256RSA",
+    "notBefore": "2026-04-02",
+    "notAfter": "2026-10-02",
+    "thumbprint": "5D52613C2813C40D2AFFBB1494978278947BEC54",
+    "selfSigned": true
+   },
+   "classification": "Restricted"
+  },
+  {
+   "host": "BR-DC01",
+   "service": "RDP",
+   "port": 3389,
+   "os": "Windows Server 2016",
+   "protocol": "TLS 1.2",
+   "cipherSuite": "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384",
+   "keyExchange": "secp256r1",
+   "cert": {
+    "subject": "CN=BR-DC01.contoso.com",
+    "issuer": "CN=BR-DC01.contoso.com",
+    "keyAlgorithm": "RSA",
+    "keySize": 2048,
+    "signatureAlgorithm": "sha256RSA",
+    "notBefore": "2026-04-02",
+    "notAfter": "2026-10-02",
+    "thumbprint": "0A2123E7CEFA30C14D732F64CB79ABCC4B9DB165",
+    "selfSigned": true
+   },
+   "classification": "Restricted",
+   "site": "Branch-Denver"
+  },
+  {
+   "host": "CORP-PAW-JMP01",
+   "service": "RDP",
+   "port": 3389,
+   "os": "Windows Server 2025",
+   "protocol": "TLS 1.3",
+   "cipherSuite": "TLS_AES_256_GCM_SHA384",
+   "keyExchange": "x25519",
+   "cert": {
+    "subject": "CN=CORP-PAW-JMP01.contoso.com",
+    "issuer": "CN=Contoso Issuing CA 01",
+    "keyAlgorithm": "RSA",
+    "keySize": 2048,
+    "signatureAlgorithm": "sha256RSA",
+    "notBefore": "2026-03-01",
+    "notAfter": "2027-03-01",
+    "thumbprint": "C23115661FFB0DF9DAEE36452BCF48385971F1BB",
+    "selfSigned": false,
+    "template": "Contoso-RDP"
+   },
+   "classification": "Restricted"
+  },
+  {
+   "host": "hr.contoso.com",
+   "service": "IIS",
+   "port": 443,
+   "os": "Windows Server 2019",
+   "protocol": "TLS 1.2",
+   "cipherSuite": "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384",
+   "keyExchange": "secp256r1",
+   "cert": {
+    "subject": "CN=hr.contoso.com",
+    "issuer": "CN=Contoso Issuing CA 01",
+    "keyAlgorithm": "RSA",
+    "keySize": 2048,
+    "signatureAlgorithm": "sha256RSA",
+    "notBefore": "2025-09-01",
+    "notAfter": "2027-09-01",
+    "thumbprint": "A10EF43A9E7516072CB95EB92E57561D80E1ED51",
+    "selfSigned": false,
+    "template": "Contoso-WebServer"
+   },
+   "classification": "Regulated",
+   "site": "HR and payroll portal"
+  },
+  {
+   "host": "legal-dms.contoso.com",
+   "service": "IIS",
+   "port": 443,
+   "os": "Windows Server 2016",
+   "protocol": "TLS 1.2",
+   "cipherSuite": "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384",
+   "keyExchange": "secp256r1",
+   "cert": {
+    "subject": "CN=legal-dms.contoso.com",
+    "issuer": "CN=Contoso Issuing CA 01",
+    "keyAlgorithm": "RSA",
+    "keySize": 2048,
+    "signatureAlgorithm": "sha256RSA",
+    "notBefore": "2025-03-15",
+    "notAfter": "2027-03-15",
+    "thumbprint": "1B327F2F171FC118DE91165C672A325260EBFDC4",
+    "selfSigned": false,
+    "template": "Contoso-WebServer"
+   },
+   "classification": "Restricted",
+   "site": "Legal document management",
+   "alsoAccepts": [
+    "TLS 1.0",
+    "TLS 1.1"
+   ]
+  },
+  {
+   "host": "claims.contoso.com",
+   "service": "IIS",
+   "port": 443,
+   "os": "Windows Server 2025",
+   "protocol": "TLS 1.3",
+   "cipherSuite": "TLS_AES_256_GCM_SHA384",
+   "keyExchange": "X25519MLKEM768",
+   "cert": {
+    "subject": "CN=claims.contoso.com",
+    "issuer": "CN=Contoso Issuing CA 01",
+    "keyAlgorithm": "RSA",
+    "keySize": 3072,
+    "signatureAlgorithm": "sha256RSA",
+    "notBefore": "2026-07-20",
+    "notAfter": "2027-08-20",
+    "thumbprint": "09E7349F28CA442F72D781F7169B32DAC0940E40",
+    "selfSigned": false,
+    "template": "Contoso-WebServer-v4"
+   },
+   "classification": "Regulated",
+   "site": "Insurance claims"
+  },
+  {
+   "host": "intranet.contoso.com",
+   "service": "IIS",
+   "port": 443,
+   "os": "Windows Server 2022",
+   "protocol": "TLS 1.3",
+   "cipherSuite": "TLS_AES_256_GCM_SHA384",
+   "keyExchange": "x25519",
+   "cert": {
+    "subject": "CN=intranet.contoso.com",
+    "issuer": "CN=Contoso Issuing CA 01",
+    "keyAlgorithm": "ECDSA",
+    "keySize": 256,
+    "signatureAlgorithm": "sha256ECDSA",
+    "notBefore": "2025-09-01",
+    "notAfter": "2027-09-01",
+    "thumbprint": "1D83C4A29548FA91200314BD807D4B6AB0553854",
+    "selfSigned": false,
+    "template": "Contoso-WebServer"
+   },
+   "classification": "Internal",
+   "site": "Intranet"
+  },
+  {
+   "host": "pki.contoso.com",
+   "service": "IIS",
+   "port": 443,
+   "os": "Windows Server 2019",
+   "protocol": "TLS 1.2",
+   "cipherSuite": "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384",
+   "keyExchange": "secp256r1",
+   "cert": {
+    "subject": "CN=pki.contoso.com",
+    "issuer": "CN=Contoso Issuing CA 01",
+    "keyAlgorithm": "RSA",
+    "keySize": 2048,
+    "signatureAlgorithm": "sha256RSA",
+    "notBefore": "2024-11-01",
+    "notAfter": "2026-12-15",
+    "thumbprint": "EDD3AAE7ED5E15FF034D16017FBCE66869B7BB71",
+    "selfSigned": false,
+    "template": "Contoso-WebServer"
+   },
+   "classification": "Public",
+   "site": "CRL and AIA distribution"
+  },
+  {
+   "host": "pqc-lab.contoso.com",
+   "service": "IIS",
+   "port": 443,
+   "os": "Windows Server 2025",
+   "protocol": "TLS 1.3",
+   "cipherSuite": "TLS_AES_256_GCM_SHA384",
+   "keyExchange": "X25519MLKEM768",
+   "cert": {
+    "subject": "CN=pqc-lab.contoso.com",
+    "issuer": "CN=Contoso PQC Pilot CA",
+    "keyAlgorithm": "ML-DSA-65",
+    "keySize": 0,
+    "signatureAlgorithm": "ML-DSA-65",
+    "notBefore": "2026-09-01",
+    "notAfter": "2027-09-01",
+    "thumbprint": "FCB447FC135C396AFF26C035C0A09CFCE14DB069",
+    "selfSigned": false,
+    "template": "PQC-WebServer-MLDSA"
+   },
+   "classification": "Internal",
+   "site": "PQC pilot"
+  },
+  {
+   "host": "CORP-WSUS01",
+   "service": "WSUS",
+   "port": 8531,
+   "os": "Windows Server 2019",
+   "protocol": "TLS 1.2",
+   "cipherSuite": "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384",
+   "keyExchange": "secp256r1",
+   "cert": {
+    "subject": "CN=corp-wsus01.contoso.com",
+    "issuer": "CN=Contoso Issuing CA 01",
+    "keyAlgorithm": "RSA",
+    "keySize": 2048,
+    "signatureAlgorithm": "sha256RSA",
+    "notBefore": "2026-01-05",
+    "notAfter": "2028-01-05",
+    "thumbprint": "9202BD90872129B6F237ADC0CC56ACA3B7369982",
+    "selfSigned": false,
+    "template": "Contoso-WebServer"
+   }
+  },
+  {
+   "host": "BR-WSUS02",
+   "service": "WSUS",
+   "port": 8530,
+   "os": "Windows Server 2012 R2",
+   "protocol": "HTTP",
+   "cipherSuite": null,
+   "keyExchange": null,
+   "cert": null,
+   "site": "Branch-Denver"
+  },
+  {
+   "host": "corp-wsus-old.contoso.com",
+   "service": "WSUS",
+   "port": 8531,
+   "os": "Windows Server 2012 R2",
+   "protocol": "TLS 1.2",
+   "cipherSuite": "TLS_RSA_WITH_AES_128_CBC_SHA",
+   "keyExchange": "RSA",
+   "cert": {
+    "subject": "CN=corp-wsus-old.contoso.com",
+    "issuer": "CN=Contoso Legacy CA",
+    "keyAlgorithm": "RSA",
+    "keySize": 1024,
+    "signatureAlgorithm": "sha1RSA",
+    "notBefore": "2023-05-01",
+    "notAfter": "2026-05-01",
+    "thumbprint": "52D572DD7DF79D82A5D04395D6A3A21F42A6EC7F",
+    "selfSigned": false,
+    "template": "WebServer"
+   }
+  }
+ ],
+ "kerberos": {
+  "domainFunctionalLevel": "Windows Server 2016",
+  "aesKeysSince": "2011-06-14",
+  "defaultDomainSupportedEncTypes": null,
+  "krbtgtPwdLastSet": "2019-08-14",
+  "accounts": [
+   {
+    "samAccountName": "svc-sql-legacy",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": 4,
+    "pwdLastSet": "2009-11-03",
+    "useDesKeyOnly": false,
+    "kdcEvents": {
+     "203": 112
+    },
+    "note": "SQL Server 2008 R2 reporting"
+   },
+   {
+    "samAccountName": "svc-backup",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": null,
+    "pwdLastSet": "2010-03-22",
+    "useDesKeyOnly": false,
+    "kdcEvents": {
+     "204": 37
+    },
+    "note": "Backup agent"
+   },
+   {
+    "samAccountName": "svc-oracle-kt",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": 4,
+    "pwdLastSet": "2015-06-30",
+    "useDesKeyOnly": false,
+    "kdcEvents": {
+     "203": 58
+    },
+    "note": "Linux keytab for Oracle SSO"
+   },
+   {
+    "samAccountName": "svc-sapbw",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": 36,
+    "pwdLastSet": "2019-04-11",
+    "useDesKeyOnly": false,
+    "kdcEvents": {
+     "201": 0
+    },
+    "note": "SAP BW (RC4 kept as a workaround)"
+   },
+   {
+    "samAccountName": "svc-crm",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": 28,
+    "pwdLastSet": "2022-02-14",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-scan",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": 3,
+    "pwdLastSet": "2012-08-09",
+    "useDesKeyOnly": true,
+    "kdcEvents": {},
+    "note": "Multifunction printer scan-to-folder"
+   },
+   {
+    "samAccountName": "NAS01$",
+    "type": "computer",
+    "spn": true,
+    "supportedEncTypes": 4,
+    "pwdLastSet": "2026-09-30",
+    "useDesKeyOnly": false,
+    "kdcEvents": {
+     "201": 14
+    },
+    "note": "Linux NAS joined with Samba"
+   },
+   {
+    "samAccountName": "svc-web-hr",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": 24,
+    "pwdLastSet": "2024-05-02",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-iis-intranet",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": null,
+    "pwdLastSet": "2023-01-18",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "gmsa-sqlprod$",
+    "type": "gmsa",
+    "spn": true,
+    "supportedEncTypes": 28,
+    "pwdLastSet": "2026-10-01",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app01",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": null,
+    "pwdLastSet": "2018-04-15",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app02",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": null,
+    "pwdLastSet": "2019-06-14",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app03",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": 24,
+    "pwdLastSet": "2019-08-20",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app04",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": 24,
+    "pwdLastSet": "2026-02-21",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app05",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": null,
+    "pwdLastSet": "2019-04-16",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app06",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": 24,
+    "pwdLastSet": "2023-03-24",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app07",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": null,
+    "pwdLastSet": "2021-07-27",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app08",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": 16,
+    "pwdLastSet": "2024-01-13",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app09",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": 24,
+    "pwdLastSet": "2020-01-25",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app10",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": 16,
+    "pwdLastSet": "2023-02-25",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app11",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": 24,
+    "pwdLastSet": "2018-02-25",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app12",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": 24,
+    "pwdLastSet": "2021-06-22",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app13",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": 24,
+    "pwdLastSet": "2022-08-12",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app14",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": null,
+    "pwdLastSet": "2022-07-20",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app15",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": null,
+    "pwdLastSet": "2026-07-11",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app16",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": 24,
+    "pwdLastSet": "2024-04-18",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app17",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": null,
+    "pwdLastSet": "2020-05-13",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app18",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": 16,
+    "pwdLastSet": "2024-03-27",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app19",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": 16,
+    "pwdLastSet": "2021-02-24",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app20",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": 24,
+    "pwdLastSet": "2020-02-10",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app21",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": 24,
+    "pwdLastSet": "2023-01-10",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app22",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": 24,
+    "pwdLastSet": "2026-08-22",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app23",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": null,
+    "pwdLastSet": "2018-04-16",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app24",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": 16,
+    "pwdLastSet": "2018-08-26",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app25",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": null,
+    "pwdLastSet": "2022-08-26",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app26",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": null,
+    "pwdLastSet": "2018-03-22",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app27",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": 16,
+    "pwdLastSet": "2018-04-10",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app28",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": 16,
+    "pwdLastSet": "2024-07-22",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app29",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": null,
+    "pwdLastSet": "2020-06-14",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app30",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": 24,
+    "pwdLastSet": "2021-07-12",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app31",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": 24,
+    "pwdLastSet": "2021-07-23",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app32",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": 24,
+    "pwdLastSet": "2022-03-25",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app33",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": 24,
+    "pwdLastSet": "2022-01-13",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app34",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": 24,
+    "pwdLastSet": "2025-02-12",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app35",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": 16,
+    "pwdLastSet": "2018-07-14",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app36",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": 24,
+    "pwdLastSet": "2018-08-20",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app37",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": 16,
+    "pwdLastSet": "2020-08-17",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app38",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": null,
+    "pwdLastSet": "2023-01-10",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app39",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": 24,
+    "pwdLastSet": "2024-02-18",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app40",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": 24,
+    "pwdLastSet": "2023-06-16",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app41",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": 24,
+    "pwdLastSet": "2022-09-27",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app42",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": null,
+    "pwdLastSet": "2022-02-13",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app43",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": 16,
+    "pwdLastSet": "2023-05-21",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app44",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": 16,
+    "pwdLastSet": "2026-08-17",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app45",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": 24,
+    "pwdLastSet": "2022-01-27",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app46",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": null,
+    "pwdLastSet": "2024-03-17",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app47",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": 16,
+    "pwdLastSet": "2018-01-10",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app48",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": 24,
+    "pwdLastSet": "2024-04-26",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app49",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": 24,
+    "pwdLastSet": "2022-01-26",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app50",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": 24,
+    "pwdLastSet": "2018-07-21",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app51",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": null,
+    "pwdLastSet": "2026-05-24",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app52",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": 16,
+    "pwdLastSet": "2019-02-21",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   },
+   {
+    "samAccountName": "svc-app53",
+    "type": "user",
+    "spn": true,
+    "supportedEncTypes": 24,
+    "pwdLastSet": "2024-07-19",
+    "useDesKeyOnly": false,
+    "kdcEvents": {}
+   }
+  ],
+  "trusts": [
+   {
+    "name": "fabrikam.local",
+    "type": "External",
+    "direction": "Bidirectional",
+    "supportedEncTypes": 4
+   },
+   {
+    "name": "tailspin.com",
+    "type": "Forest",
+    "direction": "Outbound",
+    "supportedEncTypes": 24
+   }
+  ],
+  "pkinit": {
+   "kdcTemplate": "Contoso-KDC",
+   "smartCardUsers": 410,
+   "whfbCertTrustUsers": 1250,
+   "whfbKeyTrustUsers": 2830
+  }
+ }
+}
