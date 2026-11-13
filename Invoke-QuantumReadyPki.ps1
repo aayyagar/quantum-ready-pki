@@ -413,23 +413,23 @@ function Test-QrKerberos {
         $set = Get-Prop $acc 'supportedEncTypes'
         $eff = if ($null -ne $set) { [int]$set } else { $default }
         $names = ConvertFrom-QrEncTypes $eff
-        $pwd = [datetime](Get-Prop $acc 'pwdLastSet' '2000-01-01')
+        $pwdSet = [datetime](Get-Prop $acc 'pwdLastSet' '2000-01-01')
         $ev = Get-Prop $acc 'kdcEvents' @{}
         $evMap = [ordered]@{}
         $pairs = if ($ev -is [System.Collections.IDictionary]) { @($ev.GetEnumerator() | ForEach-Object { [pscustomobject]@{ Name = "$($_.Key)"; Value = $_.Value } }) } else { @($ev.PSObject.Properties | Select-Object Name, Value) }
         foreach ($p in $pairs) { if ([int]$p.Value -gt 0) { $evMap[$p.Name] = [int]$p.Value; $stats.Events[$p.Name] = [int](Get-Prop $stats.Events $p.Name 0) + [int]$p.Value } }
         $a = New-QrAsset -Category 'Kerberos' -Name $sam -Host_ (Get-Prop $Kerberos 'domain') -Detail (Get-Prop $acc 'note' "$((Get-Prop $acc 'type' 'user')) with SPN")
         $a.Algorithm = ($names -join ', '); $a.KeyExchange = 'Symmetric (Kerberos)'
-        $a.Extra = @{ Type = Get-Prop $acc 'type' 'user'; SupportedEncTypes = $set; Effective = $names; PwdLastSet = $pwd.ToString('yyyy-MM-dd'); Events = $evMap; ExplicitSetting = ($null -ne $set) }
+        $a.Extra = @{ Type = Get-Prop $acc 'type' 'user'; SupportedEncTypes = $set; Effective = $names; PwdLastSet = $pwdSet.ToString('yyyy-MM-dd'); Events = $evMap; ExplicitSetting = ($null -ne $set) }
         if ([bool](Get-Prop $acc 'useDesKeyOnly' $false) -or ($eff -band 0x3)) { $stats.Des++; $a.Issues.Add((New-QrIssue 'QR-19' 'Critical' 0 'DES enabled' 'DES is removed from Windows Server 2025 and broken for decades. Clear "Use only Kerberos DES encryption types" and set msDS-SupportedEncryptionTypes to 0x18; replace the device if it only speaks DES.' -Classical)) }
         if ($null -ne $set -and ($eff -band 0x4)) {
             $stats.Rc4++
             $blk = if ($evMap.Contains('203') -or $evMap.Contains('204')) { " The KDC has already refused $([int](Get-Prop $evMap '203' 0) + [int](Get-Prop $evMap '204' 0)) requests (events 203/204)." } else { '' }
             $a.Issues.Add((New-QrIssue 'QR-17' 'High' 0 "RC4 explicitly enabled (msDS-SupportedEncryptionTypes 0x$('{0:X}' -f $eff))" "RC4 service tickets can be cracked offline (Kerberoasting) and stay exposed to CVE-2026-20833.$blk Fix the client, set 0x18 and reset the password." -Classical))
         }
-        if ($pwd -lt $aesSince) {
+        if ($pwdSet -lt $aesSince) {
             $stats.NoAesKeys++
-            $a.Issues.Add((New-QrIssue 'QR-18' 'High' 0 "No AES keys: password last set $($pwd.ToString('yyyy-MM-dd')), before AES keys existed in this domain" 'Since the April 2026 Kerberos update the KDC defaults to AES only, so this account fails (events 204/209) unless RC4 is kept. Reset the password twice and test the service.' -Classical))
+            $a.Issues.Add((New-QrIssue 'QR-18' 'High' 0 "No AES keys: password last set $($pwdSet.ToString('yyyy-MM-dd')), before AES keys existed in this domain" 'Since the April 2026 Kerberos update the KDC defaults to AES only, so this account fails (events 204/209) unless RC4 is kept. Reset the password twice and test the service.' -Classical))
         }
         if ($evMap.Contains('203') -or $evMap.Contains('204') -or $evMap.Contains('208') -or $evMap.Contains('209')) { $stats.Blocked++ }
         if ($a.Issues.Count) { $assets.Add((Complete-QrAsset $a $Now)) } else { $stats.Healthy++ }
